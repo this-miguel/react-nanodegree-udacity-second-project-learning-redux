@@ -1,7 +1,17 @@
-
-const initial = {hi: 'hello World'}
+import {GET_CATEGORIES} from '../actions/AsychActions'
+const initial = {
+  categories: null
+}
 
 export default function mainReducer (state = initial, action) {
-  //does nothing for now
-  return state
+  switch (action.type) {
+    case GET_CATEGORIES : {
+      return {
+        ...state,
+        categories: action.categories
+      }
+    }
+    default :
+    return state
+  }
 }
