@@ -1,6 +1,7 @@
 import {
   GET_CATEGORIES,
-  GET_POSTS
+  GET_POSTS,
+  GET_POSTS_BY_CATEGORY
 } from "../actions/AsychActions";
 
 const initial = {
@@ -19,6 +20,11 @@ export default function mainReducer (state = initial, action) {
       return {
         ...state,
         posts: action.posts
+      }
+    case GET_POSTS_BY_CATEGORY :
+      return {
+        ...state,
+        [action.category]: action.posts
       }
 
     default :
