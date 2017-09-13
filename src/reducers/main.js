@@ -3,7 +3,8 @@ import {
   GET_POSTS,
   GET_POSTS_BY_CATEGORY,
   GET_COMMENTS_FOR_POST,
-  GET_POST_DETAILS
+  GET_POST_DETAILS,
+  GET_COMMENT_DETAILS
 } from "../actions/AsychActions";
 
 const initial = {
@@ -45,6 +46,10 @@ export default function mainReducer (state = initial, action) {
 
       return postDetailsReducer(state, action)
 
+    case GET_COMMENT_DETAILS :
+
+      return commentDetailsReducer(state, action)
+
     default :
     return state
   }
@@ -56,5 +61,14 @@ function postDetailsReducer(state, action) {
   return {
     ...state,
     [`${postId}Details`]: details
+  }
+}
+
+function commentDetailsReducer(state, action) {
+  const {details} =  action
+
+  return {
+    ...state,
+    ['commentDetails']: details
   }
 }

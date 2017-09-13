@@ -4,6 +4,7 @@ export const GET_POSTS      = "GET_POSTS";
 export const GET_POSTS_BY_CATEGORY      = "GET_POSTS_BY_CATEGORY";
 export const GET_COMMENTS_FOR_POST      = "GET_COMMENTS_FOR_POST";
 export const GET_POST_DETAILS           = "GET_POST_DETAILS";
+export const GET_COMMENT_DETAILS        = "GET_COMMENT_DETAILS";
 
 export const getCategories = ({categories}) => (
   {
@@ -71,4 +72,17 @@ export const asyncGetPostDetails = (dispatch) => (postId) => {
   api
     .fetchPostDetails(postId)
     .then(details => dispatch(getPostDetails(postId, details)))
+};
+
+export const getCommentDetails = (details) => (
+  {
+    type: GET_COMMENT_DETAILS,
+    details: details,
+  }
+);
+
+export const asyncGetCommentDetails = (dispatch) => (commentId) => {
+  api
+    .fetchCommentDetails(commentId)
+    .then(details => dispatch(getCommentDetails(details)))
 };

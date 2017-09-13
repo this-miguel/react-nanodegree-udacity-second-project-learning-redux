@@ -5,7 +5,8 @@ import {
   asyncGetPosts,
   asyncGetPostsByCategory,
   asyncGetCommentsForAPost,
-  asyncGetPostDetails
+  asyncGetPostDetails,
+  asyncGetCommentDetails
 
 } from '../actions/AsychActions'
 
@@ -15,7 +16,8 @@ class App extends Component {
     this.props.getPosts()
     this.props.getPostsByCategory('redux')
     this.props.getCommentsForAPost('8xf0y6ziyjabvozdd253nd')
-    this.props.getetPostDetails('8xf0y6ziyjabvozdd253nd')
+    this.props.getPostDetails('8xf0y6ziyjabvozdd253nd')
+    this.props.getCommentDetails('894tuq4ut84ut8v4t8wun89g')
   }
   render() {
     return (
@@ -39,7 +41,8 @@ function mapDispatchToProps(dispatch){
     getPosts: asyncGetPosts(dispatch),
     getPostsByCategory:asyncGetPostsByCategory(dispatch),
     getCommentsForAPost:asyncGetCommentsForAPost(dispatch),
-    getetPostDetails:asyncGetPostDetails(dispatch)
+    getPostDetails:asyncGetPostDetails(dispatch),
+    getCommentDetails:asyncGetCommentDetails(dispatch)
   }
 }
 
