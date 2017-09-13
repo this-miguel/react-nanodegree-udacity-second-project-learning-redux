@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {asyncGetCategories} from '../actions/AsychActions'
+import {
+  asyncGetCategories,
+  asyncGetPosts
+} from '../actions/AsychActions'
 
 class App extends Component {
   componentWillMount = () => {
     this.props.getCategories()
+    this.props.getPosts()
   }
   render() {
     return (
@@ -23,7 +27,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return {
-    getCategories: asyncGetCategories(dispatch)
+    getCategories: asyncGetCategories(dispatch),
+    getPosts: asyncGetPosts(dispatch)
   }
 }
 
