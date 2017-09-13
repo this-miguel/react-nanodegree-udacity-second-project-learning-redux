@@ -26,7 +26,14 @@ const api = {
     axios.get(`posts/${postId}/comments`).then(
       (response) => (response.data)
     ).then((data) => (data))
+  ),
+
+  fetchPostDetails: (postId) => (
+    axios.get(`posts/${postId}`).then(
+      (response) => (response.data)
+    ).then((data) => (data))
   )
+
 
 }
 
