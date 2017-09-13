@@ -2,6 +2,7 @@ import api from '../utils/api'
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_POSTS      = "GET_POSTS";
 export const GET_POSTS_BY_CATEGORY      = "GET_POSTS_BY_CATEGORY";
+export const GET_COMMENTS_FOR_POST      = "GET_COMMENTS_FOR_POST";
 
 export const getCategories = ({categories}) => (
   {
@@ -41,4 +42,18 @@ export const asyncGetPostsByCategory = (dispatch) => (category) => {
   api
     .fetchPostsByCategory(category)
     .then(posts  => dispatch(getPostsByCategory(posts, category)))
+};
+
+export const getCommentsForAPost = (postId, comments) => (
+  {
+    type: GET_COMMENTS_FOR_POST,
+    comments: comments,
+    postId: postId
+  }
+);
+
+export const asyncGetCommentsForAPost = (dispatch) => (postId) => {
+  api
+    .fetchCommentsForAPost(postId)
+    .then(comments => dispatch(getCommentsForAPost(postId, comments)))
 };
