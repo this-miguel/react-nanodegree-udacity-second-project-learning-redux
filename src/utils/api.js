@@ -20,6 +20,12 @@ const api = {
     axios.get(`${category}/posts`).then(
       (response) => (response.data)
     ).then((data) => (data))
+  ),
+
+  fetchCommentsForAPost: (postId) => (
+    axios.get(`posts/${postId}/comments`).then(
+      (response) => (response.data)
+    ).then((data) => (data))
   )
 
 }
