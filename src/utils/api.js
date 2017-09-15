@@ -38,8 +38,31 @@ const api = {
     axios.get(`comments/${commentId}`).then(
       (response) => (response.data)
     ).then((data) => (data))
-  )
+  ),
 
+  sendPost: (
+    {
+
+      id,
+      timestamp,
+      title,
+      body,
+      author,
+      category
+
+    }) => (
+
+    axios.post('posts', {
+
+      id,
+      timestamp,
+      title,
+      body,
+      author,
+      category,
+
+    }).then( (data) => (data))
+  )
 
 }
 
