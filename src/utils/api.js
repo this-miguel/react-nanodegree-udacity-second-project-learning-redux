@@ -28,6 +28,16 @@ const api = {
     ).then((data) => (data))
   ),
 
+  voteForAPost: (postId, option) => (
+    axios.post(`posts/${postId}`,
+      {
+        option
+      }
+    ).then(
+      (response) => (response.data)
+    ).then((data) => (data))
+  ),
+
   fetchPostDetails: (postId) => (
     axios.get(`posts/${postId}`).then(
       (response) => (response.data)

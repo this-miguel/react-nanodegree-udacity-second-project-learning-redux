@@ -7,7 +7,8 @@ import {
   asyncGetCommentsForAPost,
   asyncGetPostDetails,
   asyncGetCommentDetails,
-  asyncSendPost
+  asyncSendPost,
+  asyncVoteForAPost
 
 } from '../actions/AsychActions'
 
@@ -44,6 +45,7 @@ class App extends Component {
     this.props.getPostDetails('8xf0y6ziyjabvozdd253nd')
     this.props.getCommentDetails('894tuq4ut84ut8v4t8wun89g')
     this.props.getPosts()
+    this.props.votePost('8xf0y6ziyjabvozdd253nd', 'upVote')
   }
 
   render() {
@@ -70,7 +72,8 @@ function mapDispatchToProps(dispatch){
     getCommentsForAPost:asyncGetCommentsForAPost(dispatch),
     getPostDetails:asyncGetPostDetails(dispatch),
     getCommentDetails:asyncGetCommentDetails(dispatch),
-    sendPost:asyncSendPost(dispatch)
+    sendPost:asyncSendPost(dispatch),
+    votePost:asyncVoteForAPost(dispatch)
   }
 }
 

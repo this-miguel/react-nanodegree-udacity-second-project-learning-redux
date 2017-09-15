@@ -6,6 +6,7 @@ export const GET_COMMENTS_FOR_POST      = "GET_COMMENTS_FOR_POST";
 export const GET_POST_DETAILS           = "GET_POST_DETAILS";
 export const GET_COMMENT_DETAILS        = "GET_COMMENT_DETAILS";
 export const POSTED_POST                = "POSTED_POST";
+export const POST_WAS_VOTED             = "POST_WAS_VOTED";
 
 export const getCategories = ({categories}) => (
   {
@@ -59,6 +60,19 @@ export const asyncGetCommentsForAPost = (dispatch) => (postId) => {
   api
     .fetchCommentsForAPost(postId)
     .then(comments => dispatch(getCommentsForAPost(postId, comments)))
+};
+
+export const voteForAPost = (post) => (
+  {
+    type: POST_WAS_VOTED,
+    post
+  }
+);
+
+export const asyncVoteForAPost = (dispatch) => (postId, option) => {
+  api
+    .voteForAPost(postId, option)
+    .then(data => dispatch(voteForAPost(data)))
 };
 
 export const getPostDetails = (postId, details) => (
