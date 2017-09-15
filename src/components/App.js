@@ -8,7 +8,8 @@ import {
   asyncGetPostDetails,
   asyncGetCommentDetails,
   asyncSendPost,
-  asyncVoteForAPost
+  asyncVoteForAPost,
+  asyncSendComment
 
 } from '../actions/AsychActions'
 
@@ -36,8 +37,34 @@ class App extends Component {
     }
   }
 
+  commentDetailsObject(
+
+    id,
+    timestamp,
+    body,
+    author,
+    parentId
+
+  ) {
+    return {
+
+      id,
+      timestamp,
+      body,
+      author,
+      parentId
+
+    }
+  }
+
   componentWillMount = () => {
     this.props.sendPost(this.postDetailsObject('testId', Date.now(), 'my new post', 'a brand new post', 'me', 'redux'))
+    this.props.sendComment(this.commentDetailsObject(
+      'testCommentId',
+      Date.now(),
+      'Hello, this is a comment',
+      'me',
+      '8xf0y6ziyjabvozdd253nd'))
     this.props.getCategories()
     this.props.getPosts()
     this.props.getPostsByCategory('redux')
@@ -73,7 +100,8 @@ function mapDispatchToProps(dispatch){
     getPostDetails:asyncGetPostDetails(dispatch),
     getCommentDetails:asyncGetCommentDetails(dispatch),
     sendPost:asyncSendPost(dispatch),
-    votePost:asyncVoteForAPost(dispatch)
+    votePost:asyncVoteForAPost(dispatch),
+    sendComment: asyncSendComment(dispatch)
   }
 }
 

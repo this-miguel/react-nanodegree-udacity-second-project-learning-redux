@@ -6,6 +6,7 @@ export const GET_COMMENTS_FOR_POST      = "GET_COMMENTS_FOR_POST";
 export const GET_POST_DETAILS           = "GET_POST_DETAILS";
 export const GET_COMMENT_DETAILS        = "GET_COMMENT_DETAILS";
 export const POSTED_POST                = "POSTED_POST";
+export const POSTED_COMMENT             = "POSTED_COMMENT";
 export const POST_WAS_VOTED             = "POST_WAS_VOTED";
 
 export const getCategories = ({categories}) => (
@@ -105,7 +106,7 @@ export const asyncGetCommentDetails = (dispatch) => (commentId) => {
 export const sentPost = ({data, status, statusText}) => (
   {
     type: POSTED_POST,
-    data,
+    post: data,
     status,
     statusText
   }
@@ -115,4 +116,19 @@ export const asyncSendPost = (dispatch) => (postData) => {
   api
     .sendPost(postData)
     .then(data => dispatch(sentPost(data)))
+};
+
+export const sentComment = ({data, status, statusText}) => (
+  {
+    type: POSTED_COMMENT,
+    comment: data,
+    status,
+    statusText
+  }
+);
+
+export const asyncSendComment = (dispatch) => (commentData) => {
+  api
+    .sendComment(commentData)
+    .then(data => dispatch(sentComment(data)))
 };

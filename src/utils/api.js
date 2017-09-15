@@ -72,6 +72,28 @@ const api = {
       category,
 
     }).then( (data) => (data))
+  ),
+
+  sendComment: (
+    {
+
+      id,
+      timestamp,
+      body,
+      author,
+      parentId
+
+    }) => (
+
+    axios.post('comments', {
+
+      id,
+      timestamp,
+      body,
+      author,
+      parentId,
+
+    }).then( (data) => (data))
   )
 
 }
