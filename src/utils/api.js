@@ -65,11 +65,17 @@ const api = {
   updateComment: ({ commentId,  timestamp, body }) => (
     axios.put(`comments/${commentId}`, { timestamp, body } ).then(
       (response) => {
-        console.log('response', response)
         return response.data
       }
     ).then((data) => (data))
   ),
+
+  deleteComment: ( commentId ) => (
+    axios.delete(`comments/${commentId}`).then(
+      (response) => (response)
+    ).then((data) => ( data ))
+  ),
+
 
   sendPost: (
     {

@@ -12,7 +12,8 @@ import {
   asyncSendComment,
   asyncUpdatePost,
   asyncUpdateComment,
-  asyncDeletePost
+  asyncDeletePost,
+  asyncDeleteComment
 
 } from '../actions/AsychActions'
 
@@ -91,7 +92,15 @@ class App extends Component {
       Date.now(),
       'this is an old comment',
       'me',
-      '8xf0y6ziyjabvozdd253nd'))
+      '8xf0y6ziyjabvozdd253nd')
+    )
+    this.props.sendComment(this.commentDetailsObject(
+      'testCommentId3',
+      Date.now(),
+      'this will be deleted',
+      'me',
+      '8xf0y6ziyjabvozdd253nd')
+    )
     this.props.getCategories()
     this.props.getPosts()
     this.props.deletePost('testId3')
@@ -103,6 +112,7 @@ class App extends Component {
     this.props.votePost('8xf0y6ziyjabvozdd253nd', 'upVote')
     this.props.updatePost(this.updatePostData('testId2', 'updated title', 'updated body'))
     this.props.updateComment(this.updateCommentData('testCommentId2', 'updated comment', Date.now()))
+    this.props.deleteComment('testCommentId3')
   }
 
   render() {
@@ -135,6 +145,7 @@ function mapDispatchToProps(dispatch){
     updatePost: asyncUpdatePost(dispatch),
     updateComment: asyncUpdateComment(dispatch),
     deletePost: asyncDeletePost(dispatch),
+    deleteComment: asyncDeleteComment(dispatch),
   }
 }
 
