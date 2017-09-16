@@ -9,6 +9,7 @@ export const POSTED_POST                = "POSTED_POST";
 export const POSTED_COMMENT             = "POSTED_COMMENT";
 export const POST_WAS_VOTED             = "POST_WAS_VOTED";
 export const POST_UPDATED               = "POST_UPDATED";
+export const POST_DELETED               = "POST_DELETED";
 export const COMMENT_UPDATED            = "COMMENT_UPDATED";
 
 export const getCategories = ({categories}) => (
@@ -103,6 +104,20 @@ export const asyncUpdatePost = (dispatch) => ( data ) => {
   api
     .updatePost(data)
     .then(data => dispatch(updatePost(data)))
+};
+
+export const deletePost = ({status, statusText}) => (
+  {
+    type: POST_DELETED,
+    status,
+    statusText
+  }
+);
+
+export const asyncDeletePost = (dispatch) => ( data ) => {
+  api
+    .deletePost(data)
+    .then(data => dispatch(deletePost(data)))
 };
 
 export const getCommentDetails = (details) => (

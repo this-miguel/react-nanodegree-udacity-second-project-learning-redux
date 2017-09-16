@@ -11,7 +11,8 @@ import {
   asyncVoteForAPost,
   asyncSendComment,
   asyncUpdatePost,
-  asyncUpdateComment
+  asyncUpdateComment,
+  asyncDeletePost
 
 } from '../actions/AsychActions'
 
@@ -76,6 +77,7 @@ class App extends Component {
   }
 
   componentWillMount = () => {
+    this.props.sendPost(this.postDetailsObject('testId3', Date.now(), 'my new post to be deleted soon', 'soon to be deleted', 'me', 'redux'))
     this.props.sendPost(this.postDetailsObject('testId', Date.now(), 'my new post', 'a brand new post', 'me', 'redux'))
     this.props.sendPost(this.postDetailsObject('testId2', Date.now(), 'old post', 'old body', 'me', 'redux'))
     this.props.sendComment(this.commentDetailsObject(
@@ -92,6 +94,7 @@ class App extends Component {
       '8xf0y6ziyjabvozdd253nd'))
     this.props.getCategories()
     this.props.getPosts()
+    this.props.deletePost('testId3')
     this.props.getPostsByCategory('redux')
     this.props.getCommentsForAPost('8xf0y6ziyjabvozdd253nd')
     this.props.getPostDetails('8xf0y6ziyjabvozdd253nd')
@@ -131,6 +134,7 @@ function mapDispatchToProps(dispatch){
     sendComment: asyncSendComment(dispatch),
     updatePost: asyncUpdatePost(dispatch),
     updateComment: asyncUpdateComment(dispatch),
+    deletePost: asyncDeletePost(dispatch),
   }
 }
 

@@ -50,6 +50,12 @@ const api = {
     ).then((data) => (data))
   ),
 
+  deletePost: ( postId ) => (
+    axios.delete(`posts/${postId}`).then(
+      (response) => (response)
+    ).then((data) => ( data ))
+  ),
+
   fetchCommentDetails: (commentId) => (
     axios.get(`comments/${commentId}`).then(
       (response) => (response.data)
