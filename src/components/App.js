@@ -9,7 +9,8 @@ import {
   asyncGetCommentDetails,
   asyncSendPost,
   asyncVoteForAPost,
-  asyncSendComment
+  asyncSendComment,
+  asyncUpdatePost
 
 } from '../actions/AsychActions'
 
@@ -57,8 +58,17 @@ class App extends Component {
     }
   }
 
+  updatePostData( postId, title, body){
+    return {
+      postId,
+      title,
+      body
+    }
+  }
+
   componentWillMount = () => {
     this.props.sendPost(this.postDetailsObject('testId', Date.now(), 'my new post', 'a brand new post', 'me', 'redux'))
+    this.props.sendPost(this.postDetailsObject('testId2', Date.now(), 'old post', 'old body', 'me', 'redux'))
     this.props.sendComment(this.commentDetailsObject(
       'testCommentId',
       Date.now(),
@@ -73,6 +83,7 @@ class App extends Component {
     this.props.getCommentDetails('894tuq4ut84ut8v4t8wun89g')
     this.props.getPosts()
     this.props.votePost('8xf0y6ziyjabvozdd253nd', 'upVote')
+    this.props.updatePost(this.updatePostData('testId2', 'updated title', 'updated body'))
   }
 
   render() {
@@ -101,7 +112,8 @@ function mapDispatchToProps(dispatch){
     getCommentDetails:asyncGetCommentDetails(dispatch),
     sendPost:asyncSendPost(dispatch),
     votePost:asyncVoteForAPost(dispatch),
-    sendComment: asyncSendComment(dispatch)
+    sendComment: asyncSendComment(dispatch),
+    updatePost: asyncUpdatePost(dispatch)
   }
 }
 

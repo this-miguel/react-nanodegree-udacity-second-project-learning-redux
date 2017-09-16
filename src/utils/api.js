@@ -44,6 +44,12 @@ const api = {
     ).then((data) => (data))
   ),
 
+  updatePost: ({ postId,  title, body }) => (
+    axios.put(`posts/${postId}`, { title, body } ).then(
+      (response) => (response.data)
+    ).then((data) => (data))
+  ),
+
   fetchCommentDetails: (commentId) => (
     axios.get(`comments/${commentId}`).then(
       (response) => (response.data)
