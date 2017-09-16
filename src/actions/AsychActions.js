@@ -9,6 +9,7 @@ export const POSTED_POST                = "POSTED_POST";
 export const POSTED_COMMENT             = "POSTED_COMMENT";
 export const POST_WAS_VOTED             = "POST_WAS_VOTED";
 export const POST_UPDATED               = "POST_UPDATED";
+export const COMMENT_UPDATED            = "COMMENT_UPDATED";
 
 export const getCategories = ({categories}) => (
   {
@@ -110,6 +111,19 @@ export const getCommentDetails = (details) => (
     details: details,
   }
 );
+
+export const updateComment = (data) => (
+  {
+    type: COMMENT_UPDATED,
+    comment: data,
+  }
+);
+
+export const asyncUpdateComment = (dispatch) => ( data ) => {
+  api
+    .updateComment(data)
+    .then(data => dispatch(updateComment(data)))
+};
 
 export const asyncGetCommentDetails = (dispatch) => (commentId) => {
   api

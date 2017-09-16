@@ -56,6 +56,15 @@ const api = {
     ).then((data) => (data))
   ),
 
+  updateComment: ({ commentId,  timestamp, body }) => (
+    axios.put(`comments/${commentId}`, { timestamp, body } ).then(
+      (response) => {
+        console.log('response', response)
+        return response.data
+      }
+    ).then((data) => (data))
+  ),
+
   sendPost: (
     {
 
