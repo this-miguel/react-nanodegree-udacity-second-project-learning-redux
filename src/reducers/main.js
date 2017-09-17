@@ -5,17 +5,20 @@ import {
   GET_POSTS_BY_CATEGORY,
   GET_COMMENTS_FOR_POST,
   GET_POST_DETAILS,
-  GET_COMMENT_DETAILS
+  GET_COMMENT_DETAILS,
+  POSTED_POST
 } from "../actions/AsychActions";
 
 const initial = {
   categories: {},
   categoriesIds: [],
   posts: {},
-  postIds: [],
+  postsIds: [],
   comments: {},
 
 }
+
+const statusOK = 200
 
 // This will just add an id key to the data equal to the key name,
 // just to be able to pass this to normalize.
@@ -86,6 +89,9 @@ export default function mainReducer(state = initial, action)  {
         },
         comments: {...state.comments, ...commentsNormalizedData.entities.comments }
       }
+    case  POSTED_POST :
+
+      return postedPostReducer(state, action)
 
     case GET_POST_DETAILS :
 
@@ -111,7 +117,8 @@ function postDetailsReducer(state, action) {
         ...state.posts[postId],
         ...details // We cannot simply replace the post content with the details because the post could have a key 'comments' : [ comments ids ].
       }
-    }
+    },
+    postsIds: [ ...state.postsIds, postId ]
   }
 }
 
@@ -121,5 +128,23 @@ function commentDetailsReducer(state, action) {
   return {
     ...state,
     ['commentDetails']: details
+  }
+}
+
+function postedPostReducer(state, action) {
+  const { post, status} =  action
+  const { id: postId } = post
+
+  if (status === statusOK) {
+    return {
+      ...state,
+      posts: {
+        ...state.posts,
+        [postId]: post
+      },
+      postsIds: [ ...state.postsIds, postId ]
+    }
+  } else {
+    return state
   }
 }
