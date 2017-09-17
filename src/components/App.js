@@ -78,6 +78,7 @@ class App extends Component {
   }
 
   componentWillMount = () => {
+    this.props.getPostDetails('8xf0y6ziyjabvozdd253nd')
     this.props.sendPost(this.postDetailsObject('testId3', Date.now(), 'my new post to be deleted soon', 'soon to be deleted', 'me', 'redux'))
     this.props.sendPost(this.postDetailsObject('testId', Date.now(), 'my new post', 'a brand new post', 'me', 'redux'))
     this.props.sendPost(this.postDetailsObject('testId2', Date.now(), 'old post', 'old body', 'me', 'redux'))

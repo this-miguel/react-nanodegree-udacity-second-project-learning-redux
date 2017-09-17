@@ -9,8 +9,12 @@ import {
 } from "../actions/AsychActions";
 
 const initial = {
-  categories: null,
-  posts: null
+  categories: {},
+  categoriesIds: [],
+  posts: {},
+  postIds: [],
+  comments: {},
+
 }
 
 // This will just add an id key to the data equal to the key name,
@@ -101,7 +105,13 @@ function postDetailsReducer(state, action) {
 
   return {
     ...state,
-    [`${postId}Details`]: details
+    posts: {
+      ...state.posts,
+      [postId]: {
+        ...state.posts[postId],
+        ...details // We cannot simply replace the post content with the details because the post could have a key 'comments' : [ comments ids ].
+      }
+    }
   }
 }
 
