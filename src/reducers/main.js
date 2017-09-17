@@ -11,6 +11,7 @@ import {
   POSTED_COMMENT,
   POST_UPDATED,
   COMMENT_UPDATED,
+  POST_DELETED
 } from "../actions/AsychActions";
 
 const initial = {
@@ -116,6 +117,10 @@ export default function mainReducer(state = initial, action)  {
     case COMMENT_UPDATED :
 
       return commentUpdatedReducer(state, action)
+
+    case POST_DELETED :
+
+      return postDeletedReducer(state, action)
 
     case GET_COMMENT_DETAILS :
 
@@ -243,5 +248,23 @@ function commentUpdatedReducer(state, action) {
         ...comment
       }
     }
+  }
+}
+
+function postDeletedReducer(state, action) {
+  const {status, postId} = action
+  if (status === statusOK){
+    return {
+      ...state,
+      posts: {
+        ...state.posts,
+        [postId]: {
+          ...state.posts[postId],
+          deleted: true
+        }
+      }
+    }
+  } else {
+    return state
   }
 }

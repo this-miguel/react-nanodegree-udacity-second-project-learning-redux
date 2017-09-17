@@ -107,11 +107,12 @@ export const asyncUpdatePost = (dispatch) => ( data ) => {
     .then(data => dispatch(updatePost(data)))
 };
 
-export const deletePost = ({status, statusText}) => (
+export const deletePost = ({status, statusText, postId}) => (
   {
     type: POST_DELETED,
     status,
-    statusText
+    statusText,
+    postId
   }
 );
 

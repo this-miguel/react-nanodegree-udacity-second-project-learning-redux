@@ -52,8 +52,11 @@ const api = {
 
   deletePost: ( postId ) => (
     axios.delete(`posts/${postId}`).then(
+      // For some reason this response comes with data:'', not too useful, so we can use only the status code.
       (response) => (response)
-    ).then((data) => ( data ))
+    ).then(({status, statusText}) => (
+      {status, statusText, postId} )
+    )
   ),
 
   fetchCommentDetails: (commentId) => (
