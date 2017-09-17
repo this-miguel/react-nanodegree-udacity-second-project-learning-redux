@@ -122,10 +122,10 @@ export const asyncDeletePost = (dispatch) => ( data ) => {
     .then(data => dispatch(deletePost(data)))
 };
 
-export const deleteComment = ({data, status, statusText}) => (
+export const deleteComment = ({ data: comment, status, statusText }) => (
   {
     type: COMMENT_DELETED,
-    data,
+    comment,
     status,
     statusText
   }

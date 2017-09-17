@@ -11,7 +11,8 @@ import {
   POSTED_COMMENT,
   POST_UPDATED,
   COMMENT_UPDATED,
-  POST_DELETED
+  POST_DELETED,
+  COMMENT_DELETED
 } from "../actions/AsychActions";
 
 const initial = {
@@ -21,9 +22,9 @@ const initial = {
   postsIds: [],
   comments: {},
 
-}
+};
 
-const statusOK = 200
+const statusOK = 200;
 
 // This will just add an id key to the data equal to the key name,
 // just to be able to pass this to normalize.
@@ -44,48 +45,48 @@ export default function mainReducer(state = initial, action)  {
 
     case GET_CATEGORIES :
 
-      const  data = prepareCategoryDataForNormalizer(action.categories)
+      const  data = prepareCategoryDataForNormalizer(action.categories);
 
-      const category = new schema.Entity('categories')
-      const categoriesSchema = { categories: [ category ] }
+      const category = new schema.Entity('categories');
+      const categoriesSchema = { categories: [ category ] };
 
-      const normalizedData =  normalize(data, categoriesSchema)
+      const normalizedData =  normalize(data, categoriesSchema);
 
       return {
         ...state,
         categories: normalizedData.entities.categories,
         categoriesIds: normalizedData.result.categories
 
-      }
+      };
 
     case GET_POSTS :
 
-      const post = new schema.Entity('posts')
-      const postsSchema = { posts: [ post ] }
-      const normalizePostsData = normalize({ posts: action.posts }, postsSchema)
+      const post = new schema.Entity('posts');
+      const postsSchema = { posts: [ post ] };
+      const normalizePostsData = normalize({ posts: action.posts }, postsSchema);
 
       return {
         ...state,
         posts: normalizePostsData.entities.posts,
         postsIds: normalizePostsData.result.posts
-      }
+      };
 
     case GET_POSTS_BY_CATEGORY :
       return {
         ...state,
         [action.category]: action.posts
-      }
+      };
 
     case POSTED_COMMENT :
 
-      return postedCommentReducer(state, action)
+      return postedCommentReducer(state, action);
 
     case GET_COMMENTS_FOR_POST :
 
-      const {comments, postId} =  action
+      const {comments, postId} =  action;
       const comment = new schema.Entity('comments');
-      const commentsSchema = { comments: [ comment] }
-      const commentsNormalizedData = normalize({comments: comments }, commentsSchema)
+      const commentsSchema = { comments: [ comment] };
+      const commentsNormalizedData = normalize({comments: comments }, commentsSchema);
 
       return {
         ...state,
@@ -97,34 +98,37 @@ export default function mainReducer(state = initial, action)  {
           }
         },
         comments: {...state.comments, ...commentsNormalizedData.entities.comments }
-      }
+      };
     case  POSTED_POST :
 
-      return postedPostReducer(state, action)
+      return postedPostReducer(state, action);
 
     case GET_POST_DETAILS :
 
-      return postDetailsReducer(state, action)
+      return postDetailsReducer(state, action);
 
     case POST_WAS_VOTED :
 
-      return postVotedReducer(state, action)
+      return postVotedReducer(state, action);
 
     case POST_UPDATED :
 
-      return postUpdatedReducer(state, action)
+      return postUpdatedReducer(state, action);
 
     case COMMENT_UPDATED :
 
-      return commentUpdatedReducer(state, action)
+      return commentUpdatedReducer(state, action);
 
     case POST_DELETED :
 
-      return postDeletedReducer(state, action)
+      return postDeletedReducer(state, action);
+
+    case COMMENT_DELETED :
+      return commentDeletedReducer(state, action);
 
     case GET_COMMENT_DETAILS :
 
-      return commentDetailsReducer(state, action)
+      return commentDetailsReducer(state, action);
 
     default :
     return state
@@ -132,7 +136,7 @@ export default function mainReducer(state = initial, action)  {
 }
 
 function postDetailsReducer(state, action) {
-  const {details, postId} =  action
+  const {details, postId} =  action;
 
   return {
     ...state,
@@ -148,7 +152,7 @@ function postDetailsReducer(state, action) {
 }
 
 function commentDetailsReducer(state, action) {
-  const {details} =  action
+  const {details} =  action;
 
   return {
     ...state,
@@ -157,8 +161,8 @@ function commentDetailsReducer(state, action) {
 }
 
 function postedPostReducer(state, action) {
-  const { post, status} =  action
-  const { id: postId } = post
+  const { post, status} =  action;
+  const { id: postId } = post;
 
   if (status === statusOK) {
     return {
@@ -175,8 +179,8 @@ function postedPostReducer(state, action) {
 }
 
 function postVotedReducer(state, action) {
-  const { post } = action
-  const { id: postId, voteScore} =  post
+  const { post } = action;
+  const { id: postId, voteScore} =  post;
 
   return {
     ...state,
@@ -191,8 +195,8 @@ function postVotedReducer(state, action) {
 }
 
 function postedCommentReducer(state, action) {
-  const { comment, status} =  action
-  const { id: commentId, parentId: postId } = comment
+  const { comment, status} =  action;
+  const { id: commentId, parentId: postId } = comment;
 
   if (status === statusOK) {
 
@@ -220,8 +224,8 @@ function postedCommentReducer(state, action) {
 }
 
 function postUpdatedReducer(state, action) {
-  const { post } = action
-  const { id: postId } = post
+  const { post } = action;
+  const { id: postId } = post;
 
   return {
     ...state,
@@ -236,8 +240,8 @@ function postUpdatedReducer(state, action) {
 }
 
 function commentUpdatedReducer(state, action) {
-  const { comment } = action
-  const { id: commentId } = comment
+  const { comment } = action;
+  const { id: commentId } = comment;
 
   return {
     ...state,
@@ -252,7 +256,7 @@ function commentUpdatedReducer(state, action) {
 }
 
 function postDeletedReducer(state, action) {
-  const {status, postId} = action
+  const {status, postId} = action;
   if (status === statusOK){
     return {
       ...state,
@@ -261,6 +265,26 @@ function postDeletedReducer(state, action) {
         [postId]: {
           ...state.posts[postId],
           deleted: true
+        }
+      }
+    }
+  } else {
+    return state
+  }
+}
+
+function commentDeletedReducer(state, action) {
+
+  const {status, comment} = action;
+  const {id: commentId} = comment;
+
+  if (status === statusOK) {
+    return {
+      ...state,
+      comments: {
+        ...state.comments,
+        [commentId]: {
+          ...comment
         }
       }
     }
