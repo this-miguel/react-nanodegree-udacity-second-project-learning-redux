@@ -6,7 +6,8 @@ import {
   GET_COMMENTS_FOR_POST,
   GET_POST_DETAILS,
   GET_COMMENT_DETAILS,
-  POSTED_POST
+  POSTED_POST,
+  POST_WAS_VOTED
 } from "../actions/AsychActions";
 
 const initial = {
@@ -97,6 +98,10 @@ export default function mainReducer(state = initial, action)  {
 
       return postDetailsReducer(state, action)
 
+    case POST_WAS_VOTED :
+
+      return postVotedReducer(state, action)
+
     case GET_COMMENT_DETAILS :
 
       return commentDetailsReducer(state, action)
@@ -146,5 +151,21 @@ function postedPostReducer(state, action) {
     }
   } else {
     return state
+  }
+}
+
+function postVotedReducer(state, action) {
+  const { post } = action
+  const { id: postId, voteScore} =  post
+
+  return {
+    ...state,
+    posts: {
+      ...state.posts,
+      [postId]: {
+        ...state.posts[postId],
+        voteScore
+      }
+    }
   }
 }
