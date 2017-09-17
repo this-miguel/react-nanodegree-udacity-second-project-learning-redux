@@ -9,7 +9,8 @@ import {
   POSTED_POST,
   POST_WAS_VOTED,
   POSTED_COMMENT,
-  POST_UPDATED
+  POST_UPDATED,
+  COMMENT_UPDATED,
 } from "../actions/AsychActions";
 
 const initial = {
@@ -111,6 +112,10 @@ export default function mainReducer(state = initial, action)  {
     case POST_UPDATED :
 
       return postUpdatedReducer(state, action)
+
+    case COMMENT_UPDATED :
+
+      return commentUpdatedReducer(state, action)
 
     case GET_COMMENT_DETAILS :
 
@@ -220,6 +225,22 @@ function postUpdatedReducer(state, action) {
       [postId]: {
         ...state.posts[postId],
         ...post
+      }
+    }
+  }
+}
+
+function commentUpdatedReducer(state, action) {
+  const { comment } = action
+  const { id: commentId } = comment
+
+  return {
+    ...state,
+    comments: {
+      ...state.comments,
+      [commentId]: {
+        ...state.comments[commentId],
+        ...comment
       }
     }
   }
