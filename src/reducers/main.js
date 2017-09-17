@@ -1,3 +1,4 @@
+import { normalize, schema } from 'normalizr';
 import {
   GET_CATEGORIES,
   GET_POSTS,
@@ -12,19 +13,49 @@ const initial = {
   posts: null
 }
 
-export default function mainReducer (state = initial, action) {
+// This will just add an id key to the data equal to the key name,
+// just to be able to pass this to normalize.
+function prepareCategoryDataForNormalizer(rawData) {
+
+  return {
+    categories: rawData.map((e) => (
+      {
+        ...e, id: e.name
+      }
+    ))
+  }
+
+}
+
+export default function mainReducer(state = initial, action)  {
   switch (action.type) {
 
     case GET_CATEGORIES :
+
+      const  data = prepareCategoryDataForNormalizer(action.categories)
+
+      const category = new schema.Entity('categories')
+      const categoriesSchema = { categories: [ category ] }
+
+      const normalizedData =  normalize(data, categoriesSchema)
+
       return {
         ...state,
-        categories: action.categories
+        categories: normalizedData.entities.categories,
+        categoriesIds: normalizedData.result.categories
+
       }
 
     case GET_POSTS :
+
+      const post = new schema.Entity('posts')
+      const postsSchema = { posts: [ post ] }
+      const normalizePostsData = normalize({ posts: action.posts }, postsSchema)
+
       return {
         ...state,
-        posts: action.posts
+        posts: normalizePostsData.entities.posts,
+        postsIds: normalizePostsData.result.posts
       }
 
     case GET_POSTS_BY_CATEGORY :
@@ -36,10 +67,20 @@ export default function mainReducer (state = initial, action) {
     case GET_COMMENTS_FOR_POST :
 
       const {comments, postId} =  action
+      const comment = new schema.Entity('comments');
+      const commentsSchema = { comments: [ comment] }
+      const commentsNormalizedData = normalize({comments: comments }, commentsSchema)
 
       return {
         ...state,
-        [`${postId}Comments`]: comments
+        posts: {
+          ...state.posts,
+          [postId]:{
+            ...state.posts[postId],
+            comments: commentsNormalizedData.result.comments
+          }
+        },
+        comments: {...state.comments, ...commentsNormalizedData.entities.comments }
       }
 
     case GET_POST_DETAILS :
