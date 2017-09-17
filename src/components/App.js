@@ -102,6 +102,14 @@ class App extends Component {
       'me',
       '8xf0y6ziyjabvozdd253nd')
     )
+
+    this.props.sendComment(this.commentDetailsObject(
+      'testCommentId9',
+      Date.now(),
+      'brand new comment',
+      'me',
+      'testId2')
+    )
     this.props.getCategories()
     this.props.getPosts()
     this.props.deletePost('testId3')
