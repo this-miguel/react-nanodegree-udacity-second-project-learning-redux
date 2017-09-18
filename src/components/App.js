@@ -16,6 +16,7 @@ import {
   asyncDeleteComment
 
 } from '../actions/AsychActions'
+import CategoryList from './CategoryList'
 
 class App extends Component {
 
@@ -127,7 +128,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        hello world
+        <CategoryList/>
       </div>
     );
   }
