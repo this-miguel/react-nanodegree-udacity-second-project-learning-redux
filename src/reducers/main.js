@@ -72,10 +72,8 @@ export default function mainReducer(state = initial, action)  {
       };
 
     case GET_POSTS_BY_CATEGORY :
-      return {
-        ...state,
-        [action.category]: action.posts
-      };
+
+      return postByCategoryReducer(state, action);
 
     case POSTED_COMMENT :
 
@@ -298,4 +296,17 @@ function commentDeletedReducer(state, action) {
   } else {
     return state
   }
+}
+
+function postByCategoryReducer(state, action) {
+  const post = new schema.Entity('posts');
+  const postsSchema = { posts: [ post ] };
+  const normalizePostsData = normalize({ posts: action.posts }, postsSchema);
+
+  return {
+    ...state,
+    posts: { ...state.posts, ...normalizePostsData.entities.posts },
+    postsIds: [ ...state.postsIds, ...normalizePostsData.result.posts ]
+  };
+
 }
