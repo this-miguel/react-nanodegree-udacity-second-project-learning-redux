@@ -5,20 +5,24 @@ import {
   asyncGetCategories
 } from '../actions/AsychActions'
 import PropTypes from 'prop-types';
+import '../CategoryList.css';
 
 class CategoryList extends Component {
 
   componentWillMount(){
-    this.props.getCategories()
+    const { categories } =  this.props;
+    if ( Object.keys(categories).length === 0 ) {
+      this.props.getCategories()
+    }
   }
   render(){
     const {categoriesIds, categories} =  this.props;
     return (
-      <div>
+      <div className='category-list'>
         <h3> Categories </h3>
         <ul>
           {
-            categoriesIds.map((category)=> (
+            categoriesIds.map( category => (
             <li key={`${categories[category].name}-li`}>
               <Link to={`/${categories[category].path}`} key={`${categories[category]}-link`}> {categories[category].name} </Link>
             </li>
