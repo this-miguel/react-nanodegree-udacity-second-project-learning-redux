@@ -137,10 +137,10 @@ export const asyncDeleteComment = (dispatch) => ( data ) => {
     .then(data => dispatch(deleteComment(data)))
 };
 
-export const getCommentDetails = (details) => (
+export const getCommentDetails = (comment) => (
   {
     type: GET_COMMENT_DETAILS,
-    details: details,
+    comment,
   }
 );
 

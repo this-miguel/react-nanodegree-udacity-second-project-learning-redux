@@ -152,11 +152,18 @@ function postDetailsReducer(state, action) {
 }
 
 function commentDetailsReducer(state, action) {
-  const {details} =  action;
+  const {comment}       =  action;
+  const {id: commentId} =  comment;
 
   return {
     ...state,
-    ['commentDetails']: details
+    comments: {
+      ...state.comments,
+      [commentId]: {
+        ...state.comments[commentId],
+        ...comment
+      }
+    }
   }
 }
 
