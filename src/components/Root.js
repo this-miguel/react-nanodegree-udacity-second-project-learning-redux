@@ -5,6 +5,7 @@ import { Router, Route  } from 'react-router'
 import createHistory from 'history/createBrowserHistory'
 import CategoryList from './CategoryList'
 import PostListConnected from './PostList'
+import Post from './Post'
 import {connect} from 'react-redux'
 
 import {
@@ -21,32 +22,35 @@ class Root extends Component {
   }
 
   render(){
-    const { store, categoriesIds } = this.props;
+    const { store } = this.props;
 
     return(
       <Provider store={store}>
         <Router history={history}>
           <div className="app">
             <CategoryList/>
-            {
-              categoriesIds.map(categoryId => (
-                <Route
-                  key={`/${categoryId}-route`}
-                  exact path={`/${categoryId}`}
-                  render={ () => (
-                    <PostListConnected
-                      key={`/${categoryId}-post-list`}
-                      category={categoryId}
-                    />
-                  )}
-                />
-              ))
-            }
+            <Route
+              key={'category-route'}
+              exact path='/:categoryId'
+              render={({match}) => ( <PostListConnected category={ match.params.categoryId}/>)}
+            />
+
             <Route
               exact path='/'
               render={ () => (
                 <PostListConnected
                   category='all'
+                />
+              )}
+            />
+
+            <Route
+              key='category-post-details-route'
+              exact path={`/:categoryId/:postId`}
+              render={({match}) => (
+                 <Post
+                  category={ match.params.categoryId}
+                  postId={ match.params.postId}
                 />
               )}
             />
