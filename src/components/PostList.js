@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -43,7 +44,7 @@ class PostList extends Component {
         {
           postsToRender.map(post => (
             <li key={`${post.id}-${category}`}>
-              <div>title: {post.title} </div>
+              <Link to={`${post.category}/${post.id}`}> {post.title} </Link>
             </li>
           ))
         }
