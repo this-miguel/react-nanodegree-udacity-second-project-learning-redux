@@ -33,11 +33,11 @@ export const getPosts = (posts) => (
   }
 );
 
-export const asyncGetPosts = (dispatch) => () => {
+export const asyncGetPosts = (dispatch) => () => (
   api
     .fetchPosts()
     .then(posts  => dispatch(getPosts(posts)))
-};
+);
 
 export const getPostsByCategory = (posts, category) => (
   {
@@ -47,11 +47,11 @@ export const getPostsByCategory = (posts, category) => (
   }
 );
 
-export const asyncGetPostsByCategory = (dispatch) => (category) => {
+export const asyncGetPostsByCategory = (dispatch) => (category) => (
   api
     .fetchPostsByCategory(category)
     .then(posts  => dispatch(getPostsByCategory(posts, category)))
-};
+);
 
 export const getCommentsForAPost = (postId, comments) => (
   {
