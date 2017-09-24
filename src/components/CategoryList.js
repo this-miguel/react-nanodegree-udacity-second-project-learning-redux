@@ -5,7 +5,6 @@ import {
   asyncGetCategories
 } from '../actions/AsychActions'
 import PropTypes from 'prop-types';
-import '../CategoryList.css';
 
 class CategoryList extends Component {
 
