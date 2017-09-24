@@ -306,7 +306,8 @@ function postByCategoryReducer(state, action) {
   return {
     ...state,
     posts: { ...state.posts, ...normalizePostsData.entities.posts },
-    postsIds: [ ...state.postsIds, ...normalizePostsData.result.posts ]
+    //just makes sure no duplicate Ids are added.
+    postsIds: Array.from(new Set([ ...state.postsIds, ...normalizePostsData.result.posts ]))
   };
 
 }
