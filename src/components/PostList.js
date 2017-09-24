@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import PostListItem from './PostListItem';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -7,12 +7,11 @@ import {
   asyncGetPosts,
   asyncGetPostsByCategory,
 } from '../actions/AsychActions'
-import '../PostList.css'
 
 class PostList extends Component {
 
   componentWillMount(){
-    const {categories, category, getPosts, getPostsByCategory } =  this.props;
+    const {categories, category, getPosts, getPostsByCategory} =  this.props;
     if ( Object.keys(categories).length === 0 ) {
       this.props.getCategories()
     }
@@ -37,18 +36,24 @@ class PostList extends Component {
     postsToRender = postsToRender.filter( post => !post.deleted );
 
     let title = (category === 'all') ? 'All Posts' : `Posts about ${category}`;
+    const headers =  ['Title', 'Author', 'Comments', 'Score' ];
     return (
       <div className='post-list'>
        <h3> {title} </h3>
-       <ul>
-        {
+       <table className="table">
+         <thead>
+           <tr>
+             {headers.map((header)=>(<th key={header}>{header}</th>))}
+           </tr>
+         </thead>
+         <tbody>
+         {
           postsToRender.map(post => (
-            <li key={`${post.id}-${category}`}>
-              <Link to={`${post.category}/${post.id}`}> {post.title} </Link>
-            </li>
+            <PostListItem key={`${post.id}-${post.category}${category}_view`} post={post}/>
           ))
         }
-       </ul>
+        </tbody>
+       </table>
 
       </div>
     )
