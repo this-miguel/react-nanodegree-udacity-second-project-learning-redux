@@ -36,7 +36,7 @@ class PostList extends Component {
     postsToRender = postsToRender.filter( post => !post.deleted );
 
     let title = (category === 'all') ? 'All Posts' : `Posts about ${category}`;
-    const headers =  ['Title', 'Author', 'Comments', 'Score' ];
+    const headers =  ['Title', 'Author', 'Comments', 'Score', 'Vote' ];
     return (
       <div className='post-list'>
        <h3> {title} </h3>

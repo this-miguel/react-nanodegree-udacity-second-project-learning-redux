@@ -74,7 +74,7 @@ export const voteForAPost = (post) => (
   }
 );
 
-export const asyncVoteForAPost = (dispatch) => (postId, option) => {
+export const asyncVoteForAPost = (dispatch) => (postId, option) => () => {
   api
     .voteForAPost(postId, option)
     .then(data => dispatch(voteForAPost(data)))

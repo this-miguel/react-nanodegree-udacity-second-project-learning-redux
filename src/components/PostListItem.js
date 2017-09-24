@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   asyncGetCommentsForAPost,
+  asyncVoteForAPost,
 } from '../actions/AsychActions'
 
 class PostListItem extends Component {
@@ -13,9 +14,8 @@ class PostListItem extends Component {
     getCommentsForAPost(post.id)
   }
 
-
   render() {
-    let { post} = this.props;
+    let { post, upvotePost, downvotePost} = this.props;
     return (
             <tr key={`${post.id}-post-item`}>
               <td>
@@ -30,6 +30,14 @@ class PostListItem extends Component {
               <td>
                 {post.voteScore}
               </td>
+              <td>
+                <button style={{display: 'inline-block'}} onClick={upvotePost}>
+                  <span className='glyphicon glyphicon-chevron-up' alt='upvote'></span>
+                </button>
+                <button onClick={downvotePost}>
+                  <span className='glyphicon glyphicon-chevron-down' alt='downvote'></span>
+                </button>
+              </td>
             </tr>
     )
 
@@ -43,9 +51,13 @@ PostListItem.propTypes = {
 
 
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch, OwnProps){
+  const {  post }      = OwnProps;
+  const { id: postId } = post;
   return {
     getCommentsForAPost: asyncGetCommentsForAPost(dispatch),
+    upvotePost:asyncVoteForAPost(dispatch)(postId, 'upVote'),
+    downvotePost:asyncVoteForAPost(dispatch)(postId, 'downVote'),
   }
 }
 
