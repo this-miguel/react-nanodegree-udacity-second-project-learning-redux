@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.css'
 import React, { Component }  from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
@@ -28,32 +29,42 @@ class Root extends Component {
       <Provider store={store}>
         <Router history={history}>
           <div className="app">
-            <CategoryList/>
-            <Route
-              key={'category-route'}
-              exact path='/:categoryId'
-              render={({match}) => ( <PostListConnected category={ match.params.categoryId}/>)}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-xs-4">
+                  <CategoryList/>
+                </div>
+                <div className="col-xs-8">
+                  <Route
+                    key={'category-route'}
+                    exact path='/:categoryId'
+                    render={({match}) => ( <PostListConnected category={ match.params.categoryId}/>)}
+                  />
 
-            <Route
-              exact path='/'
-              render={ () => (
-                <PostListConnected
-                  category='all'
-                />
-              )}
-            />
+                  <Route
+                    exact path='/'
+                    render={ () => (
+                      <PostListConnected
+                        category='all'
+                      />
+                    )}
+                  />
+                  <Route
+                    key='category-post-details-route'
+                    exact path={`/:categoryId/:postId`}
+                    render={({match}) => (
+                       <Post
+                        category={ match.params.categoryId}
+                        postId={ match.params.postId}
+                      />
+                    )}
+                  />
 
-            <Route
-              key='category-post-details-route'
-              exact path={`/:categoryId/:postId`}
-              render={({match}) => (
-                 <Post
-                  category={ match.params.categoryId}
-                  postId={ match.params.postId}
-                />
-              )}
-            />
+                </div>
+              </div>
+
+            </div>
+
 
           </div>
         </Router>
