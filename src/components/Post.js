@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {asyncVoteForAPost } from '../actions/AsychActions'
+import {asyncVoteForAPost, asyncGetPostDetails, asyncGetCommentsForAPost } from '../actions/AsychActions'
 
 class Post extends Component {
+  componentWillMount(){
+    const  {getPostDetails, getCommentsFor, postId} = this.props;
+    getPostDetails();
+    getCommentsFor(postId)
+  }
   render(){
-    const  {posts, postId, upvotePost, downvotePost } = this.props;
-    const  post = posts[postId];
+    const  {post, upvotePost, downvotePost } = this.props;
     const headers =  [ 'Comments', 'Score', 'Vote', 'Date' ];
+    if(post === undefined) return null;
     return (
       <div>
         <h3>{post.title}</h3>
@@ -52,9 +57,10 @@ class Post extends Component {
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state, ownProps){
+  const {postId} = ownProps;
   return {
-    posts: state.posts,
+    post: state.posts[postId]
   }
 }
 
@@ -63,6 +69,9 @@ function mapDispatchToProps(dispatch, OwnProps){
   return {
     upvotePost:asyncVoteForAPost(dispatch)(postId, 'upVote'),
     downvotePost:asyncVoteForAPost(dispatch)(postId, 'downVote'),
+    getPostDetails: asyncGetPostDetails(dispatch)(postId),
+    getCommentsFor:  asyncGetCommentsForAPost(dispatch),
+
   }
 }
 const PostConnected =  connect(

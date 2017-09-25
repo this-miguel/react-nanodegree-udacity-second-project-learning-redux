@@ -88,11 +88,11 @@ export const getPostDetails = (postId, details) => (
   }
 );
 
-export const asyncGetPostDetails = (dispatch) => (postId) => {
+export const asyncGetPostDetails = (dispatch) => (postId) => () => (
   api
     .fetchPostDetails(postId)
     .then(details => dispatch(getPostDetails(postId, details)))
-};
+);
 
 export const updatePost = (data) => (
   {
