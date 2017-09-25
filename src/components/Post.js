@@ -9,6 +9,7 @@ class Post extends Component {
       <div>
         <h3>{post.title}</h3>
         <p>{post.body}</p>
+        <p> by {post.author}</p>
       </div>
       )
   }
