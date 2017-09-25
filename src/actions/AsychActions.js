@@ -116,7 +116,7 @@ export const deletePost = ({status, statusText, postId}) => (
   }
 );
 
-export const asyncDeletePost = (dispatch) => ( data ) => {
+export const asyncDeletePost = (dispatch) => ( data ) => () => {
   api
     .deletePost(data)
     .then(data => dispatch(deletePost(data)))

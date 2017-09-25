@@ -12,6 +12,9 @@ class Post extends Component {
     const  {post, upvotePost, downvotePost } = this.props;
     const headers =  [ 'Comments', 'Score', 'Vote', 'Date' ];
     if(post === undefined) return null;
+    if(post.deleted){
+      return  <h4>The post you are looking for was deleted</h4>
+    }
     return (
       <div>
         <h3>{post.title}</h3>

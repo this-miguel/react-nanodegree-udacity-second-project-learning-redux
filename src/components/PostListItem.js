@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import {
   asyncGetCommentsForAPost,
   asyncVoteForAPost,
+  asyncDeletePost
 } from '../actions/AsychActions'
 
 class PostListItem extends Component {
@@ -23,7 +24,7 @@ class PostListItem extends Component {
   };
 
   render() {
-    let { post, upvotePost, downvotePost} = this.props;
+    let { post, upvotePost, downvotePost, deletePost} = this.props;
     return (
             <tr key={`${post.id}-post-item`}>
               <td>
@@ -49,6 +50,11 @@ class PostListItem extends Component {
               <td>
                 {new Date(post.timestamp).toDateString()}
               </td>
+              <td>
+                <button onClick={deletePost}>
+                  <span className='glyphicon glyphicon-remove' alt='downvote'></span>
+                </button>
+              </td>
             </tr>
     )
 
@@ -57,6 +63,9 @@ class PostListItem extends Component {
 
 PostListItem.propTypes = {
   getCommentsForAPost: PropTypes.func.isRequired,
+  upvotePost: PropTypes.func.isRequired,
+  downvotePost: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
   post:         PropTypes.object.isRequired,
 };
 
@@ -69,6 +78,7 @@ function mapDispatchToProps(dispatch, OwnProps){
     getCommentsForAPost: asyncGetCommentsForAPost(dispatch),
     upvotePost:asyncVoteForAPost(dispatch)(postId, 'upVote'),
     downvotePost:asyncVoteForAPost(dispatch)(postId, 'downVote'),
+    deletePost:asyncDeletePost(dispatch)(postId),
   }
 }
 
