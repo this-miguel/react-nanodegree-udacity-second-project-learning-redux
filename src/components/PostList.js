@@ -10,6 +10,13 @@ import {
 
 class PostList extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      sortBy: 'voteScore'
+    }
+  }
+
   componentWillMount(){
     const {categories, category, getPosts, getPostsByCategory} =  this.props;
     if ( Object.keys(categories).length === 0 ) {
@@ -22,18 +29,36 @@ class PostList extends Component {
     }
   }
 
+  comparePosts = (property) => {
+      return  function(post, otherPost){
+        if (post[property] > otherPost[property]) {
+          return -1;
+        }
+        if (post[property] < otherPost[property]) {
+          return 1;
+        }
+        return 0;
+      }
+  };
+
+  isOrderedByThisCriteria = (sortByArg, compareWith ) => sortByArg === compareWith;
+
+  showAsActive = (active) => ( active ? { color: 'blue' } : { color: 'grey'} );
+
   render() {
     const {posts, postsIds, category} =  this.props;
-    let postsToRender;
+    const { sortBy } = this.state;
+    let postsToRender, filteredPosts;
 
     if(category === 'all'){
-      postsToRender = postsIds.map( postId => posts[postId] )
+      filteredPosts = postsIds.map( postId => posts[postId] )
     } else {
       const idsFromCurrentCategory = postsIds.filter( postId => posts[postId].category === category );
-      postsToRender = idsFromCurrentCategory.map( postId => posts[postId] );
+      filteredPosts = idsFromCurrentCategory.map( postId => posts[postId] );
     }
 
-    postsToRender = postsToRender.filter( post => !post.deleted );
+    postsToRender = filteredPosts.filter( post => !post.deleted );
+    postsToRender.sort(this.comparePosts(sortBy));
 
     let title = (category === 'all') ? 'All Posts' : `Posts about ${category}`;
     const headers =  ['Title', 'Author', 'Comments', 'Score', 'Vote' ];
@@ -43,7 +68,24 @@ class PostList extends Component {
        <table className="table">
          <thead>
            <tr>
-             {headers.map((header)=>(<th key={header}>{header}</th>))}
+             {
+               headers.map((header)=> {
+                 if(header)
+                   if(header === 'Score') return (
+                     <th
+                       key={header}
+                       style={this.showAsActive(this.isOrderedByThisCriteria(sortBy, 'voteScore'))}
+                     >
+                       {header}
+                       <span
+                         className='glyphicon glyphicon-arrow-up'
+                       >
+                       </span>
+                     </th>
+                   );
+                 return <th key={header}>{header}</th>
+               })
+             }
            </tr>
          </thead>
          <tbody>
