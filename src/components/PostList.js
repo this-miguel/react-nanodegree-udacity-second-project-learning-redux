@@ -29,6 +29,14 @@ class PostList extends Component {
     }
   }
 
+  sortByDate = () => {
+    this.setState({sortBy:'timestamp'})
+  };
+
+  sortByVotes = () => {
+    this.setState({sortBy:'voteScore'})
+  };
+
   comparePosts = (property) => {
       return  function(post, otherPost){
         if (post[property] > otherPost[property]) {
@@ -61,7 +69,7 @@ class PostList extends Component {
     postsToRender.sort(this.comparePosts(sortBy));
 
     let title = (category === 'all') ? 'All Posts' : `Posts about ${category}`;
-    const headers =  ['Title', 'Author', 'Comments', 'Score', 'Vote' ];
+    const headers =  ['Title', 'Author', 'Comments', 'Score', 'Vote', 'Date' ];
     return (
       <div className='post-list'>
        <h3> {title} </h3>
@@ -75,6 +83,7 @@ class PostList extends Component {
                      <th
                        key={header}
                        style={this.showAsActive(this.isOrderedByThisCriteria(sortBy, 'voteScore'))}
+                       onClick={this.sortByVotes}
                      >
                        {header}
                        <span
@@ -83,6 +92,19 @@ class PostList extends Component {
                        </span>
                      </th>
                    );
+                 if(header === 'Date') return (
+                   <th
+                     key={header}
+                     style={this.showAsActive(this.isOrderedByThisCriteria(sortBy, 'timestamp'))}
+                     onClick={this.sortByDate}
+                   >
+                     {header}
+                     <span
+                       className='glyphicon glyphicon-arrow-up'
+                     >
+                       </span>
+                   </th>
+                 );
                  return <th key={header}>{header}</th>
                })
              }

@@ -38,6 +38,9 @@ class PostListItem extends Component {
                   <span className='glyphicon glyphicon-chevron-down' alt='downvote'></span>
                 </button>
               </td>
+              <td>
+                {new Date(post.timestamp).toDateString()}
+              </td>
             </tr>
     )
 
