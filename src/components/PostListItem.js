@@ -11,8 +11,16 @@ class PostListItem extends Component {
 
   componentWillMount(){
     let {getCommentsForAPost, post} = this.props;
-    getCommentsForAPost(post.id)
+    getCommentsForAPost(post.id);
   }
+
+  getComments = () => {
+    let {getCommentsForAPost, post} = this.props;
+    if(post.comments === undefined) {
+      getCommentsForAPost(post.id)
+    }
+    return '...'
+  };
 
   render() {
     let { post, upvotePost, downvotePost} = this.props;
@@ -25,7 +33,7 @@ class PostListItem extends Component {
                 {post.author}
               </td>
               <td>
-                {post.comments ? post.comments.length : '...' }
+                {post.comments ? post.comments.length : this.getComments()}
               </td>
               <td>
                 {post.voteScore}

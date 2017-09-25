@@ -28,6 +28,9 @@ class CategoryList extends Component {
             ))
           }
         </ul>
+        <p>
+          <Link to='/' key='root-link'> all posts </Link>
+        </p>
       </div>
     )
   }
