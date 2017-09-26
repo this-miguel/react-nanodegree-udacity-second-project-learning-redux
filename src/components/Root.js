@@ -68,6 +68,8 @@ class Root extends Component {
 
           </div>
         </Router>
+        <CommentModal activeModalType='comments'/>
+        <PostModal    activeModalType='posts'/>
       </Provider>
     )
   }

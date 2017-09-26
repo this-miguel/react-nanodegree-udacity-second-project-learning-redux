@@ -160,7 +160,7 @@ export default function mainReducer(state = initial, action)  {
       const { entity, id } = action;
       return {
         ...state,
-        [`selected${entity}`]: state[`${entity.toLocaleLowerCase()}s`][id] ? state[`${entity.toLocaleLowerCase()}s`][id] : {}
+        [`selected${entity}`]: id
       };
 
     default :
