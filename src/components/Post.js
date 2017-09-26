@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {asyncVoteForAPost, asyncGetPostDetails, asyncGetCommentsForAPost } from '../actions/AsychActions'
+import CommentList from './CommentList';
 
 class Post extends Component {
   componentWillMount(){
@@ -22,7 +23,6 @@ class Post extends Component {
         <p> by {post.author} </p>
 
         <div className="panel panel-default">
-          <div className="panel-heading">Post Info</div>
             <table className="table">
             <thead>
             <tr>
@@ -55,6 +55,7 @@ class Post extends Component {
             </tbody>
           </table>
         </div>
+        <CommentList postId={post.id}/>
       </div>
       )
   }

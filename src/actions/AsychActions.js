@@ -12,6 +12,7 @@ export const POST_UPDATED               = "POST_UPDATED";
 export const POST_DELETED               = "POST_DELETED";
 export const COMMENT_DELETED            = "COMMENT_DELETED";
 export const COMMENT_UPDATED            = "COMMENT_UPDATED";
+export const COMMENT_WAS_VOTED          = "COMMENT_WAS_VOTED";
 
 export const getCategories = ({categories}) => (
   {
@@ -61,7 +62,7 @@ export const getCommentsForAPost = (postId, comments) => (
   }
 );
 
-export const asyncGetCommentsForAPost = (dispatch) => (postId) => {
+export const asyncGetCommentsForAPost = (dispatch) => (postId) => () => {
   api
     .fetchCommentsForAPost(postId)
     .then(comments => dispatch(getCommentsForAPost(postId, comments)))
@@ -78,6 +79,19 @@ export const asyncVoteForAPost = (dispatch) => (postId, option) => () => {
   api
     .voteForAPost(postId, option)
     .then(data => dispatch(voteForAPost(data)))
+};
+
+export const voteForAComment = (comment) => (
+  {
+    type: COMMENT_WAS_VOTED,
+    comment
+  }
+);
+
+export const asyncVoteForAComment = (dispatch) => (commentId, option) => () => {
+  api
+    .voteForAComment(commentId, option)
+    .then(data => dispatch(voteForAComment(data)))
 };
 
 export const getPostDetails = (postId, details) => (
@@ -131,7 +145,7 @@ export const deleteComment = ({ data: comment, status, statusText }) => (
   }
 );
 
-export const asyncDeleteComment = (dispatch) => ( data ) => {
+export const asyncDeleteComment = (dispatch) => ( data ) => () => {
   api
     .deleteComment(data)
     .then(data => dispatch(deleteComment(data)))
@@ -157,7 +171,7 @@ export const asyncUpdateComment = (dispatch) => ( data ) => {
     .then(data => dispatch(updateComment(data)))
 };
 
-export const asyncGetCommentDetails = (dispatch) => (commentId) => {
+export const asyncGetCommentDetails = (dispatch) => (commentId) => () => {
   api
     .fetchCommentDetails(commentId)
     .then(details => dispatch(getCommentDetails(details)))

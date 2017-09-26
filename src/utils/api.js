@@ -124,7 +124,17 @@ const api = {
       parentId,
 
     }).then( (data) => (data))
-  )
+  ),
+
+  voteForAComment: (commentId, option) => (
+    axios.post(`comments/${commentId}`,
+      {
+        option
+      }
+    ).then(
+      (response) => (response.data)
+    ).then((data) => (data))
+  ),
 
 }
 
