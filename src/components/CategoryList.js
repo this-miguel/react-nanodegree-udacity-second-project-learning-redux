@@ -19,18 +19,15 @@ class CategoryList extends Component {
     return (
       <div className='category-list'>
         <h3> Categories </h3>
-        <ul>
+        <div className='list-group'>
           {
             categoriesIds.map( category => (
-            <li key={`${categories[category].name}-li`}>
-              <Link to={`/${categories[category].path}`} key={`${categories[category]}-link`}> {categories[category].name} </Link>
-            </li>
+              <Link className='list-group-item' to={`/${categories[category].path}`} key={`${category}-link`}> {categories[category].name} </Link>
             ))
           }
-        </ul>
-        <p>
-          <Link to='/' key='root-link'> all posts </Link>
-        </p>
+          <Link className='list-group-item' to='/' key='root-link'> all posts </Link>
+        </div>
+
       </div>
     )
   }
