@@ -16,13 +16,21 @@ import {
   COMMENT_WAS_VOTED,
 } from "../actions/AsychActions";
 
+import {
+  SETUP_MODAL,
+  SHOW_MODAL,
+  CLEAR_AND_CLOSE_MODAL
+} from "../actions/modalActions";
+
 const initial = {
   categories: {},
   categoriesIds: [],
   posts: {},
   postsIds: [],
   comments: {},
-
+  activeModal: null,
+  selectedComment: null,
+  selectedPost: null
 };
 
 const statusOK = 200;
@@ -132,6 +140,28 @@ export default function mainReducer(state = initial, action)  {
     case GET_COMMENT_DETAILS :
 
       return commentDetailsReducer(state, action);
+
+    case CLEAR_AND_CLOSE_MODAL :
+      return {
+        ...state,
+        activeModal: null,
+        selectedComment: null,
+        selectedPost: null
+      };
+
+    case SHOW_MODAL :
+      const { key } = action;
+      return {
+        ...state,
+        activeModal: key
+      };
+
+    case SETUP_MODAL :
+      const { entity, id } = action;
+      return {
+        ...state,
+        [`selected${entity}`]: state[`${entity.toLocaleLowerCase()}s`][id] ? state[`${entity.toLocaleLowerCase()}s`][id] : {}
+      };
 
     default :
     return state
