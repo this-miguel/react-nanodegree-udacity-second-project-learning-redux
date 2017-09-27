@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {asyncVoteForAPost, asyncGetPostDetails, asyncGetCommentsForAPost } from '../actions/AsychActions'
+import {showModal, setupModal} from '../actions/modalActions'
 import CommentList from './CommentList';
 
 class Post extends Component {
@@ -9,8 +10,17 @@ class Post extends Component {
     getPostDetails();
     getCommentsFor(postId)
   }
+
+  setupAnShowCommentModal = () => {
+    const {showModal, setupModal} = this.props;
+    setupModal();
+    showModal()
+  };
+
+
   render(){
     const  {post, upvotePost, downvotePost } = this.props;
+    const {setupAnShowCommentModal} = this;
     const headers =  [ 'Comments', 'Score', 'Vote', 'Date' ];
     if(post === undefined) return null;
     if(post.deleted){
@@ -21,7 +31,9 @@ class Post extends Component {
         <h3>{post.title}</h3>
         <p>{post.body}</p>
         <p> by {post.author} </p>
-
+        <button onClick={setupAnShowCommentModal} className='btn btn-default'>
+          New Comment <span className='glyphicon glyphicon-comment' alt='new comment'></span>
+        </button>
         <div className="panel panel-default">
             <table className="table">
             <thead>
@@ -75,6 +87,12 @@ function mapDispatchToProps(dispatch, OwnProps){
     downvotePost:asyncVoteForAPost(dispatch)(postId, 'downVote'),
     getPostDetails: asyncGetPostDetails(dispatch)(postId),
     getCommentsFor:  asyncGetCommentsForAPost(dispatch),
+    showModal:  function () {
+      dispatch(showModal('comment'))
+    },
+    setupModal: function () {
+      dispatch(setupModal( null, postId)) // when the comment is new, the commentId (first param) is null.
+    }
 
   }
 }

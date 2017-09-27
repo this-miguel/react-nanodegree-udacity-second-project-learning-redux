@@ -1,15 +1,10 @@
 import React, { Component }  from 'react'
-import PropTypes from 'prop-types'
 import Modal from 'react-modal'
-import createHistory from 'history/createBrowserHistory'
 import {clearAndCloseModal} from '../actions/modalActions';
 import modalStyles from './common/modalStyles'
 import CommentForm from  './CommentForm';
 import {connect} from 'react-redux'
 
-import {
-  asyncGetCategories
-} from '../actions/AsychActions'
 
 class CommentModalDisconnected extends Component {
 
@@ -34,7 +29,6 @@ class CommentModalDisconnected extends Component {
 
 
       >
-
             <span className='glyphicon glyphicon-remove close-modal-x' onClick={closeModal}></span>
             <CommentForm commentId={commentId} closeModal={closeModal}/>
 
@@ -51,7 +45,7 @@ function mapStateToProps (state, ownProps) {
 }
 
 
-function mapDispatchToProps (dispatch, ownProps) {
+function mapDispatchToProps (dispatch) {
   return{
     closeModal: function () {
       dispatch(clearAndCloseModal())

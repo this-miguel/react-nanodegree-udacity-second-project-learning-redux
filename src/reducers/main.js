@@ -157,10 +157,11 @@ export default function mainReducer(state = initial, action)  {
       };
 
     case SETUP_MODAL :
-      const { entity, id } = action;
+      const { commentId, postId: _postId } = action;
       return {
         ...state,
-        [`selected${entity}`]: id
+        selectedComment: commentId,
+        selectedPost: _postId
       };
 
     default :

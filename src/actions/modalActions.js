@@ -2,11 +2,11 @@ export const SETUP_MODAL = 'SETUP_MODAL';
 export const SHOW_MODAL  =  'SHOW_MODAL';
 export const CLEAR_AND_CLOSE_MODAL = 'CLEAR_AND_CLOSE_MODAL';
 
-export const setupModal =  function (entity, id){
+export const setupModal =  function ( commentId, postId){
   return {
     type: SETUP_MODAL,
-    entity,
-    id,
+    commentId,
+    postId
   }
 };
 

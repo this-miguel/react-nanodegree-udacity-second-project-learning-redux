@@ -85,7 +85,8 @@ function mapDispatchToProps(dispatch, ownProps){
       dispatch(showModal('comment'))
     },
     setupModal: function () {
-      dispatch(setupModal('Comment', commentId))
+      // when the comment is exist, the postId (second param) is null because we need it to know which post it  belongs.
+      dispatch(setupModal(commentId, null))
     }
   }
 }
