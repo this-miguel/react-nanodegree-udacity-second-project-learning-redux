@@ -21,7 +21,7 @@ class CommentModalDisconnected extends Component {
     const {
       isOpen,
       closeModal,
-      ...others
+      commentId
     } = this.props;
     return(
       <Modal
@@ -35,7 +35,8 @@ class CommentModalDisconnected extends Component {
 
       >
 
-            <CommentForm />
+            <span className='glyphicon glyphicon-remove close-modal-x' onClick={closeModal}></span>
+            <CommentForm commentId={commentId} closeModal={closeModal}/>
 
       </Modal>
     )
