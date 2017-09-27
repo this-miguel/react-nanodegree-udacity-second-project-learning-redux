@@ -6,6 +6,10 @@ import {
   asyncDeleteComment,
   asyncVoteForAComment
 } from '../actions/AsychActions'
+import {
+  showModal,
+  setupModal
+} from '../actions/modalActions';
 
 class CommentItem extends Component {
 
@@ -14,8 +18,16 @@ class CommentItem extends Component {
     getCommentDetails()
   }
 
+  setupAnShowModal = () => {
+    console.log(this.props);
+    const {showModal, setupModal} = this.props;
+    setupModal();
+    showModal()
+  };
+
   render() {
     const {downvoteComment, upvoteComment, deleteComment, comment} =  this.props;
+    const {setupAnShowModal} = this;
 
     return (
 
@@ -32,7 +44,7 @@ class CommentItem extends Component {
               <button type="button" className="btn btn-default" onClick={upvoteComment}>
                 <span className='glyphicon glyphicon-thumbs-up'></span>
               </button>
-              <button type="button" className="btn btn-default">
+              <button type="button" className="btn btn-default" onClick={setupAnShowModal}>
                 <span className='glyphicon glyphicon-pencil'></span>
               </button>
               <button type="button" className="btn btn-default" onClick={deleteComment}>
@@ -70,6 +82,12 @@ function mapDispatchToProps(dispatch, ownProps){
     downvoteComment: asyncVoteForAComment(dispatch)(commentId, 'downVote'),
     getCommentDetails: asyncGetCommentDetails(dispatch)(commentId),
     deleteComment: asyncDeleteComment(dispatch)(commentId),
+    showModal:  function () {
+      dispatch(showModal('comment'))
+    },
+    setupModal: function () {
+      dispatch(setupModal('Comment', commentId))
+    }
   }
 }
 

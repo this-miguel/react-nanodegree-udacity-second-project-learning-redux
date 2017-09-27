@@ -3,3 +3,49 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+/* react-modal animation for opening and closing the modal */
+
+.ReactModalPortal > div {
+    opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+    /* Milliseconds have to be the same as the passed to closeTimeoutMS prop of <Modal/> component. */
+    transition: opacity 275ms ease-in-out;
+}
+.ReactModalPortal .ReactModal__Overlay--after-open {
+     opacity: 1;
+ }
+.ReactModalPortal .ReactModal__Overlay--before-close {
+     opacity: 0;
+ }
+
+
+/* react-modal animation for the content when opening and closing the modal */
+
+.ReactModal__Content--after-open {
+
+     transform:         translate3d(0, 300px, 0);
+     -webkit-transform: translate3d(0, 300px, 0);
+
+     -webkit-transition: all 275ms ease-in-out;
+     -moz-transition:    all 275ms ease-in-out;
+     transition:         all 275ms ease-in-out;
+
+ }
+
+.ReactModal__Content--before-close {
+
+     transform:         translate3d(0, -300px, 0);
+     -webkit-transform: translate3d(0, -300px, 0);
+
+     -webkit-transition: all 275ms ease-in-out;
+     -moz-transition:    all 275ms ease-in-out;
+     transition:         all 275ms ease-in-out;;
+
+ }
+
+/* react-modal no scroll when the modals are open. */
+.ReactModal__Body--open {
+    overflow: hidden;
+}

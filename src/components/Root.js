@@ -7,6 +7,7 @@ import createHistory from 'history/createBrowserHistory'
 import CategoryList from './CategoryList'
 import PostListConnected from './PostList'
 import Post from './Post'
+import CommentModal from './ComentModal';
 import {connect} from 'react-redux'
 
 import {
@@ -34,6 +35,8 @@ class Root extends Component {
                 <div className="col-xs-4">
                   <CategoryList/>
                 </div>
+                <CommentModal activeModalType='comments' modalAction='comment' />
+
                 <div className="col-xs-8">
                   <Route
                     key={'category-route'}
@@ -68,8 +71,7 @@ class Root extends Component {
 
           </div>
         </Router>
-        <CommentModal activeModalType='comments'/>
-        <PostModal    activeModalType='posts'/>
+        {/*<PostModal    activeModalType='posts'/>*/}
       </Provider>
     )
   }
