@@ -19,7 +19,6 @@ class CommentItem extends Component {
   }
 
   setupAnShowModal = () => {
-    console.log(this.props);
     const {showModal, setupModal} = this.props;
     setupModal();
     showModal()
