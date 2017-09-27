@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 import createHistory from 'history/createBrowserHistory'
 import {clearAndCloseModal} from '../actions/modalActions';
 import modalStyles from './common/modalStyles'
+import CommentForm from  './CommentForm';
 import {connect} from 'react-redux'
 
 import {
@@ -34,7 +35,7 @@ class CommentModalDisconnected extends Component {
 
       >
 
-            HOLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            <CommentForm />
 
       </Modal>
     )
@@ -43,7 +44,8 @@ class CommentModalDisconnected extends Component {
 
 function mapStateToProps (state, ownProps) {
   return {
-    isOpen: state.activeModal === ownProps.modalAction
+    isOpen: state.activeModal === ownProps.modalAction,
+    commentId: state.selectedComment
   };
 }
 
