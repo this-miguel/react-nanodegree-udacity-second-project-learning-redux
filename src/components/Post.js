@@ -31,9 +31,13 @@ class Post extends Component {
         <h3>{post.title}</h3>
         <p>{post.body}</p>
         <p> by {post.author} </p>
-        <button onClick={setupAnShowCommentModal} className='btn btn-default'>
-          New Comment <span className='glyphicon glyphicon-comment' alt='new comment'></span>
-        </button>
+        <div className="row" style={{padding: 10}}>
+          <div className="col-xs-offset-9 col-xs-3">
+            <button onClick={setupAnShowCommentModal} className='btn btn-default'>
+              New Comment <span className='glyphicon glyphicon-comment' alt='new comment'></span>
+            </button>
+          </div>
+        </div>
         <div className="panel panel-default">
             <table className="table">
             <thead>
