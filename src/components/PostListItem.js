@@ -18,7 +18,7 @@ class PostListItem extends Component {
   getComments = () => {
     let {getCommentsForAPost, post} = this.props;
     if(post.comments === undefined) {
-      getCommentsForAPost(post.id)
+      getCommentsForAPost()
     }
     return '...'
   };
@@ -75,7 +75,7 @@ function mapDispatchToProps(dispatch, OwnProps){
   const {  post }      = OwnProps;
   const { id: postId } = post;
   return {
-    getCommentsForAPost: asyncGetCommentsForAPost(dispatch),
+    getCommentsForAPost: asyncGetCommentsForAPost(dispatch)(postId),
     upvotePost:asyncVoteForAPost(dispatch)(postId, 'upVote'),
     downvotePost:asyncVoteForAPost(dispatch)(postId, 'downVote'),
     deletePost:asyncDeletePost(dispatch)(postId),
