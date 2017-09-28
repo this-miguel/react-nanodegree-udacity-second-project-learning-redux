@@ -14,13 +14,18 @@ class Post extends Component {
   setupAnShowCommentModal = () => {
     const {showModal, setupModal} = this.props;
     setupModal();
-    showModal()
+    showModal();
   };
 
+  setupAnShowPostModal = () => {
+    const {showPostModal, setupModal} = this.props;
+    setupModal();
+    showPostModal();
+  };
 
   render(){
     const  {post, upvotePost, downvotePost } = this.props;
-    const {setupAnShowCommentModal} = this;
+    const {setupAnShowCommentModal, setupAnShowPostModal} = this;
     const headers =  [ 'Comments', 'Score', 'Vote', 'Date' ];
     if(post === undefined) return null;
     if(post.deleted){
@@ -28,13 +33,22 @@ class Post extends Component {
     }
     return (
       <div>
-        <h3>{post.title}</h3>
+        <div className="row" style={{padding: 10}}>
+          <div className="col-xs-9">
+            <h3>{post.title}</h3>
+          </div>
+          <div className="col-xs-3">
+            <button onClick={setupAnShowPostModal} className='btn btn-default'>
+               <span className='glyphicon glyphicon-pencil'></span> Edit Post
+            </button>
+          </div>
+        </div>
         <p>{post.body}</p>
         <p> by {post.author} </p>
         <div className="row" style={{padding: 10}}>
           <div className="col-xs-offset-9 col-xs-3">
             <button onClick={setupAnShowCommentModal} className='btn btn-default'>
-              New Comment <span className='glyphicon glyphicon-comment' alt='new comment'></span>
+              <span className='glyphicon glyphicon-comment' alt='new comment'></span> New Comment
             </button>
           </div>
         </div>
@@ -94,8 +108,12 @@ function mapDispatchToProps(dispatch, OwnProps){
     showModal:  function () {
       dispatch(showModal('comment'))
     },
+    showPostModal:  function () {
+      dispatch(showModal('post'))
+    },
     setupModal: function () {
-      dispatch(setupModal( null, postId)) // when the comment is new, the commentId (first param) is null.
+      // We sent null for comment because does not apply in this case.
+      dispatch(setupModal( null, postId))
     }
 
   }

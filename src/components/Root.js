@@ -8,6 +8,7 @@ import CategoryList from './CategoryList'
 import PostListConnected from './PostList'
 import Post from './Post'
 import CommentModal from './ComentModal';
+import PostModal from './PostModal';
 import {connect} from 'react-redux'
 
 import {
@@ -36,6 +37,7 @@ class Root extends Component {
                   <CategoryList/>
                 </div>
                 <CommentModal activeModalType='comments' modalAction='comment' />
+                <PostModal    activeModalType='posts'    modalAction='post' />
 
                 <div className="col-xs-8">
                   <Route
@@ -71,7 +73,6 @@ class Root extends Component {
 
           </div>
         </Router>
-        {/*<PostModal    activeModalType='posts'/>*/}
       </Provider>
     )
   }

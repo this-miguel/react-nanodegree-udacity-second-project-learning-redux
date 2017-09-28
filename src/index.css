@@ -58,8 +58,40 @@ body {
     margin-bottom: 40px;
 }
 
+.post-form-title {
+    padding: 0;
+    width: 480px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.post-form-author-category {
+    padding: 0;
+    width: 480px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.post-text-area {
+    padding: 15px;
+    width: 480px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.action-buttons-post-modal {
+    padding: 0;
+    width: 480px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
 .close-modal-x {
     position: absolute;
-    top: 15px;
-    left: 500px;
+    top: 20px;
+    left: 505px;
 }

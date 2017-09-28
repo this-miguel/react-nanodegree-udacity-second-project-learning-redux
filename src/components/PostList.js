@@ -8,6 +8,11 @@ import {
   asyncGetPostsByCategory,
 } from '../actions/AsychActions'
 
+import {
+  showModal,
+  setupModal,
+} from '../actions/modalActions'
+
 class PostList extends Component {
 
   constructor(props){
@@ -37,6 +42,12 @@ class PostList extends Component {
     this.setState({sortBy:'voteScore'})
   };
 
+  setupAnShowPostModal = () => {
+    const {showPostModal, setupModal} = this.props;
+    setupModal();
+    showPostModal();
+  };
+
   comparePosts = (property) => {
       return  function(post, otherPost){
         if (post[property] > otherPost[property]) {
@@ -56,6 +67,8 @@ class PostList extends Component {
   render() {
     const {posts, postsIds, category} =  this.props;
     const { sortBy } = this.state;
+    const {setupAnShowPostModal} = this;
+
     let postsToRender, filteredPosts;
 
     if(category === 'all'){
@@ -72,7 +85,18 @@ class PostList extends Component {
     const headers =  ['Title', 'Author', 'Comments', 'Score', 'Vote', 'Date' ];
     return (
       <div className='post-list'>
-       <h3> {title} </h3>
+
+        <div className="row" style={{padding: 10}}>
+          <div className="col-xs-9">
+            <h3> {title} </h3>
+          </div>
+          <div className="col-xs-3">
+            <button onClick={setupAnShowPostModal} className='btn btn-default'>
+              <span className='glyphicon glyphicon-plus'></span> New Post
+            </button>
+          </div>
+        </div>
+
        <table className="table">
          <thead>
            <tr>
@@ -149,6 +173,13 @@ function mapDispatchToProps(dispatch){
     getCategories: asyncGetCategories(dispatch),
     getPosts: asyncGetPosts(dispatch),
     getPostsByCategory:asyncGetPostsByCategory(dispatch),
+    showPostModal:  function () {
+      dispatch(showModal('post'))
+    },
+    setupModal: function () {
+      // We sent null for comment because does not apply in this case, and null for post because the post is new.
+      dispatch(setupModal( null, null))
+    }
   }
 }
 
