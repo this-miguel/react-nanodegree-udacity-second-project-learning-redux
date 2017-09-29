@@ -38,8 +38,12 @@ class Post extends Component {
 
     const headers =  [ 'Comments', 'Score', 'Vote', 'Date' ];
     if(post === undefined) return null;
-    if(post.deleted){
-      return  <h4>The post you are looking for was deleted</h4>
+    if(post.deleted || post.id === undefined){
+      return (
+        <div className="col-xs-8">
+          <h3 className='text-center'> Sorry, the post you are looking for was deleted</h3>
+        </div>
+      )
     }
     return (
       <div>
@@ -100,7 +104,7 @@ class Post extends Component {
             </tbody>
           </table>
         </div>
-        <CommentList postId={post.id}/>
+        { post.comments && <CommentList postId={post.id}/> }
       </div>
       )
   }
