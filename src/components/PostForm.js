@@ -15,7 +15,7 @@ class PostFormDisconnected extends Component {
 
   constructor(props){
     super(props);
-    const { post, postId } = this.props;
+    const { post, postId, categoriesIds } = this.props;
     if (post) {
       const {title, body, author, category} = post;
       this.state = {
@@ -29,7 +29,7 @@ class PostFormDisconnected extends Component {
         body:   '',
         author: '',
         title:  '',
-        category: null
+        category: categoriesIds[0]
       }
     }
   }
