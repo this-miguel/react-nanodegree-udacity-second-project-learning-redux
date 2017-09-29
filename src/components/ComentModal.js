@@ -8,9 +8,6 @@ import {connect} from 'react-redux'
 
 class CommentModalDisconnected extends Component {
 
-  componentWillMount() {
-
-  }
   render(){
 
     const {
