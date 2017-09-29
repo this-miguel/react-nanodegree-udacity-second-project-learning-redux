@@ -10,9 +10,9 @@ import CommentList from './CommentList';
 
 class Post extends Component {
   componentWillMount(){
-    const  {getPostDetails, getCommentsFor, postId} = this.props;
+    const  {getPostDetails, getCommentsForPost} = this.props;
     getPostDetails();
-    getCommentsFor(postId)
+    getCommentsForPost()
   }
 
   setupAnShowCommentModal = () => {
@@ -123,7 +123,7 @@ function mapDispatchToProps(dispatch, OwnProps){
     upvotePost:asyncVoteForAPost(dispatch)(postId, 'upVote'),
     downvotePost:asyncVoteForAPost(dispatch)(postId, 'downVote'),
     getPostDetails: asyncGetPostDetails(dispatch)(postId),
-    getCommentsFor:  asyncGetCommentsForAPost(dispatch),
+    getCommentsForPost:  asyncGetCommentsForAPost(dispatch)(postId),
     deletePost:asyncDeletePost(dispatch)(postId),
     showModal:  function () {
       dispatch(showModal('comment'))
