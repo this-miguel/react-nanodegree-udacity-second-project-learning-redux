@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {asyncVoteForAPost, asyncGetPostDetails, asyncGetCommentsForAPost } from '../actions/AsychActions'
+import {
+  asyncVoteForAPost,
+  asyncGetPostDetails,
+  asyncGetCommentsForAPost,
+  asyncDeletePost } from '../actions/AsychActions';
 import {showModal, setupModal} from '../actions/modalActions'
 import CommentList from './CommentList';
 
@@ -24,8 +28,14 @@ class Post extends Component {
   };
 
   render(){
-    const  {post, upvotePost, downvotePost } = this.props;
+    const  {
+      post,
+      upvotePost,
+      downvotePost,
+      deletePost } = this.props;
+
     const {setupAnShowCommentModal, setupAnShowPostModal} = this;
+
     const headers =  [ 'Comments', 'Score', 'Vote', 'Date' ];
     if(post === undefined) return null;
     if(post.deleted){
@@ -38,7 +48,7 @@ class Post extends Component {
             <h3>{post.title}</h3>
           </div>
           <div className="col-xs-3">
-            <button onClick={setupAnShowPostModal} className='btn btn-default'>
+            <button onClick={setupAnShowPostModal} className='btn btn-default btn-block'>
                <span className='glyphicon glyphicon-pencil'></span> Edit Post
             </button>
           </div>
@@ -46,9 +56,14 @@ class Post extends Component {
         <p>{post.body}</p>
         <p> by {post.author} </p>
         <div className="row" style={{padding: 10}}>
-          <div className="col-xs-offset-9 col-xs-3">
-            <button onClick={setupAnShowCommentModal} className='btn btn-default'>
+          <div className="col-xs-offset-6 col-xs-3">
+            <button onClick={setupAnShowCommentModal} className='btn btn-default btn-block'>
               <span className='glyphicon glyphicon-comment' alt='new comment'></span> New Comment
+            </button>
+          </div>
+          <div className="col-xs-3">
+            <button onClick={deletePost} className='btn btn-default btn-block'>
+              <span className='glyphicon glyphicon-remove' alt='new comment'></span> Delete Post
             </button>
           </div>
         </div>
@@ -105,6 +120,7 @@ function mapDispatchToProps(dispatch, OwnProps){
     downvotePost:asyncVoteForAPost(dispatch)(postId, 'downVote'),
     getPostDetails: asyncGetPostDetails(dispatch)(postId),
     getCommentsFor:  asyncGetCommentsForAPost(dispatch),
+    deletePost:asyncDeletePost(dispatch)(postId),
     showModal:  function () {
       dispatch(showModal('comment'))
     },
