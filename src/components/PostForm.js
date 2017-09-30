@@ -183,16 +183,20 @@ class PostFormDisconnected extends Component {
                </div>
              </div>
              <div className="col-xs-6">
-               <select value={this.state.value} className='form-control' onChange={handleSelectChange} >
-                 {
-                   categoriesIds.map((categoryId) =>(<option key={categoryId} value={categoryId} > {categoryId} </option>))
-                 }
-               </select>
+               <div className="input-group ">
+                    <span
+                      className="input-group-addon"
+                      id="basic-addon1">
+                      <span className='glyphicon glyphicon-folder-open'/>
+                    </span>
+                   <select value={this.state.value} className='form-control' onChange={handleSelectChange} >
+                     {
+                       categoriesIds.map((categoryId) =>(<option key={categoryId} value={categoryId} > {categoryId} </option>))
+                     }
+                   </select>
+               </div>
              </div>
            </div>
-
-
-
 
            <div className='action-buttons-post-modal'>
              <div className="btn-group btn-group-justified" role="group" aria-label="...">

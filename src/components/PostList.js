@@ -85,7 +85,7 @@ class PostList extends Component {
             <h3> {title} </h3>
           </div>
           <div className="col-xs-3">
-            <button onClick={setupAnShowPostModal} className='btn btn-default'>
+            <button onClick={setupAnShowPostModal} className='btn btn-default btn-block'>
               <span className='glyphicon glyphicon-plus'></span> New Post
             </button>
           </div>
