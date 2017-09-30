@@ -7,6 +7,7 @@ import {
   asyncVoteForAPost,
   asyncDeletePost
 } from '../actions/AsychActions'
+import { showModal, setupModal } from '../actions/modalActions'
 
 class PostListItem extends Component {
 
@@ -23,8 +24,15 @@ class PostListItem extends Component {
     return '...'
   };
 
+  setupAnShowPostModal = () => {
+    const {showPostModal, setupModal} = this.props;
+    setupModal();
+    showPostModal();
+  };
+
   render() {
     let { post, upvotePost, downvotePost, deletePost} = this.props;
+    let { setupAnShowPostModal } = this;
     return (
             <tr key={`${post.id}-post-item`}>
               <td>
@@ -40,10 +48,10 @@ class PostListItem extends Component {
                 {post.voteScore}
               </td>
               <td>
-                <button style={{display: 'inline-block'}} onClick={upvotePost}>
+                <button style={{display: 'inline-block'}} onClick={upvotePost} className='btn btn-default btn-block'>
                   <span className='glyphicon glyphicon-chevron-up' alt='upvote'></span>
                 </button>
-                <button onClick={downvotePost}>
+                <button onClick={downvotePost} className='btn btn-default btn-block'>
                   <span className='glyphicon glyphicon-chevron-down' alt='downvote'></span>
                 </button>
               </td>
@@ -51,7 +59,12 @@ class PostListItem extends Component {
                 {new Date(post.timestamp).toDateString()}
               </td>
               <td>
-                <button onClick={deletePost}>
+                <button onClick={setupAnShowPostModal} className='btn btn-default btn-block'>
+                  <span className='glyphicon glyphicon-pencil'></span>
+                </button>
+              </td>
+              <td>
+                <button onClick={deletePost} className='btn btn-default btn-block'>
                   <span className='glyphicon glyphicon-remove' alt='downvote'></span>
                 </button>
               </td>
@@ -79,6 +92,13 @@ function mapDispatchToProps(dispatch, OwnProps){
     upvotePost:asyncVoteForAPost(dispatch)(postId, 'upVote'),
     downvotePost:asyncVoteForAPost(dispatch)(postId, 'downVote'),
     deletePost:asyncDeletePost(dispatch)(postId),
+    showPostModal:  function () {
+      dispatch(showModal('post'))
+    },
+    setupModal: function () {
+      // We sent null for comment because does not apply in this case.
+      dispatch(setupModal( null, postId))
+    }
   }
 }
 

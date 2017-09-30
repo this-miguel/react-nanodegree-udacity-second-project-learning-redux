@@ -89,10 +89,10 @@ class Post extends Component {
                 {post.voteScore}
               </td>
               <td>
-                <button style={{display: 'inline-block'}} onClick={upvotePost}>
+                <button className='btn btn-default' style={{display: 'inline-block'}} onClick={upvotePost}>
                   <span className='glyphicon glyphicon-chevron-up' alt='upvote'></span>
                 </button>
-                <button onClick={downvotePost}>
+                <button className='btn btn-default' onClick={downvotePost}>
                   <span className='glyphicon glyphicon-chevron-down' alt='downvote'></span>
                 </button>
               </td>

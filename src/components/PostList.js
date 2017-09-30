@@ -82,7 +82,7 @@ class PostList extends Component {
     postsToRender.sort(this.comparePosts(sortBy));
 
     let title = (category === 'all') ? 'All Posts' : `Posts about ${category}`;
-    const headers =  ['Title', 'Author', 'Comments', 'Score', 'Vote', 'Date' ];
+    const headers =  ['Title', 'Author', 'Comments', 'Score', 'Vote', 'Date', 'Edit',  'Delete' ];
     return (
       <div className='post-list'>
 
