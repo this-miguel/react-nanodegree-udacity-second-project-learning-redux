@@ -26,8 +26,16 @@ Go [here](https://help.github.com/articles/cloning-a-repository/) to know how if
 
 
 ### The sever setup
-Clone the stater repo provided by Udacity as the server side for this project. 
-To start the server go inside the directory and run this in the console:
+Clone the stater repo provided by Udacity as the server side for this project.
+
+To install the server dependencies, go inside the directory where repository was cloned and run this in the console:
+
+```
+npm install
+```
+ 
+After the installation process is completed, whenever you want to start the server, go inside the directory where the repo was cloned
+ and run this in the console to start the server :
 ```
 node server
 ```
