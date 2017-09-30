@@ -49,17 +49,31 @@ function prepareCategoryDataForNormalizer(rawData) {
 
 }
 
-export default function mainReducer(state = initial, action)  {
+// This is to be able to access all parts of the state inside any reducer, and to not be constraint with names by combineReducers().
+export default function mainReducer(state = initial, action) {
+
+  let newState;
+
+  newState = categoriesReducer(state, action);
+  newState = postsReducer(newState, action);
+  newState = commentsReducer(newState, action);
+  newState = modalReducer(newState, action);
+
+  return newState;
+
+}
+
+function categoriesReducer(state = {}, action) {
   switch (action.type) {
 
     case GET_CATEGORIES :
 
-      const  data = prepareCategoryDataForNormalizer(action.categories);
+      const data = prepareCategoryDataForNormalizer(action.categories);
 
       const category = new schema.Entity('categories');
-      const categoriesSchema = { categories: [ category ] };
+      const categoriesSchema = {categories: [category]};
 
-      const normalizedData =  normalize(data, categoriesSchema);
+      const normalizedData = normalize(data, categoriesSchema);
 
       return {
         ...state,
@@ -68,25 +82,53 @@ export default function mainReducer(state = initial, action)  {
 
       };
 
+    default :
+      return state
+
+  }
+}
+
+
+function postsReducer(state = {}, action) {
+
+  switch (action.type) {
+
     case GET_POSTS :
 
-      const post = new schema.Entity('posts');
-      const postsSchema = { posts: [ post ] };
-      const normalizePostsData = normalize({ posts: action.posts }, postsSchema);
-
-      return {
-        ...state,
-        posts: normalizePostsData.entities.posts,
-        postsIds: normalizePostsData.result.posts
-      };
+      return getPostsReducer(state, action);
 
     case GET_POSTS_BY_CATEGORY :
 
       return postByCategoryReducer(state, action);
 
-    case POSTED_COMMENT :
+    case  POSTED_POST :
 
-      return postedCommentReducer(state, action);
+      return postedPostReducer(state, action);
+
+    case GET_POST_DETAILS :
+
+      return postDetailsReducer(state, action);
+
+    case POST_WAS_VOTED :
+
+      return postVotedReducer(state, action);
+
+    case POST_UPDATED :
+
+      return postUpdatedReducer(state, action);
+
+    case POST_DELETED :
+
+      return postDeletedReducer(state, action);
+
+    default :
+      return state
+  }
+
+}
+
+function commentsReducer(state= {}, action)  {
+  switch (action.type) {
 
     case GET_COMMENTS_FOR_POST :
 
@@ -106,21 +148,6 @@ export default function mainReducer(state = initial, action)  {
         },
         comments: {...state.comments, ...commentsNormalizedData.entities.comments }
       };
-    case  POSTED_POST :
-
-      return postedPostReducer(state, action);
-
-    case GET_POST_DETAILS :
-
-      return postDetailsReducer(state, action);
-
-    case POST_WAS_VOTED :
-
-      return postVotedReducer(state, action);
-
-    case POST_UPDATED :
-
-      return postUpdatedReducer(state, action);
 
     case COMMENT_UPDATED :
 
@@ -130,34 +157,45 @@ export default function mainReducer(state = initial, action)  {
 
       return commentVotedReducer(state, action);
 
-    case POST_DELETED :
-
-      return postDeletedReducer(state, action);
 
     case COMMENT_DELETED :
+
       return commentDeletedReducer(state, action);
 
     case GET_COMMENT_DETAILS :
 
       return commentDetailsReducer(state, action);
 
+    case POSTED_COMMENT :
+
+      return postedCommentReducer(state, action);
+
+    default :
+    return state
+  }
+}
+
+function modalReducer(state = {}, action){
+
+  switch (action.type) {
+
     case CLEAR_AND_CLOSE_MODAL :
-      return {
-        ...state,
-        activeModal: null,
-        selectedComment: null,
-        selectedPost: null
-      };
+        return {
+          ...state,
+          activeModal: null,
+          selectedComment: null,
+          selectedPost: null
+        };
 
     case SHOW_MODAL :
-      const { key } = action;
+        const { key } = action;
       return {
         ...state,
         activeModal: key
       };
 
     case SETUP_MODAL :
-      const { commentId, postId: _postId } = action;
+        const { commentId, postId: _postId } = action;
       return {
         ...state,
         selectedComment: commentId,
@@ -165,7 +203,8 @@ export default function mainReducer(state = initial, action)  {
       };
 
     default :
-    return state
+      return state
+
   }
 }
 
@@ -200,6 +239,19 @@ function commentDetailsReducer(state, action) {
     }
   }
 }
+
+function getPostsReducer(state, action) {
+  const post = new schema.Entity('posts');
+  const postsSchema = { posts: [ post ] };
+  const normalizePostsData = normalize({ posts: action.posts }, postsSchema);
+
+  return {
+    ...state,
+    posts: normalizePostsData.entities.posts,
+    postsIds: normalizePostsData.result.posts
+  };
+}
+
 
 function postedPostReducer(state, action) {
   const { post, status} =  action;
