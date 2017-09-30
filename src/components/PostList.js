@@ -23,15 +23,9 @@ class PostList extends Component {
   }
 
   componentWillMount(){
-    const {categories, category, getPosts, getPostsByCategory} =  this.props;
-    if ( Object.keys(categories).length === 0 ) {
-      this.props.getCategories()
-    }
-    if (category === 'all') {
-      getPosts()
-    } else {
-      getPostsByCategory(category)
-    }
+    const { categories, category, getPosts, getPostsByCategory } =  this.props;
+    if ( Object.keys(categories).length === 0 ) this.props.getCategories();
+    category === 'all' ? getPosts() : getPostsByCategory(category);
   }
 
   sortByDate = () => {
