@@ -13,6 +13,7 @@ export const POST_DELETED               = "POST_DELETED";
 export const COMMENT_DELETED            = "COMMENT_DELETED";
 export const COMMENT_UPDATED            = "COMMENT_UPDATED";
 export const COMMENT_WAS_VOTED          = "COMMENT_WAS_VOTED";
+export const statusOK                   = 200;
 
 export const getCategories = ({categories}) => (
   {
