@@ -1,6 +1,5 @@
 import { normalize, schema } from 'normalizr';
 import {
-  GET_CATEGORIES,
   GET_POSTS,
   GET_POSTS_BY_CATEGORY,
   GET_COMMENTS_FOR_POST,
@@ -21,6 +20,7 @@ import {
   SHOW_MODAL,
   CLEAR_AND_CLOSE_MODAL
 } from "../actions/modalActions";
+import categoriesReducer from './categories'
 
 const initial = {
   categories: {},
@@ -34,20 +34,6 @@ const initial = {
 };
 
 const statusOK = 200;
-
-// This will just add an id key to the data equal to the key name,
-// just to be able to pass this to normalize.
-function prepareCategoryDataForNormalizer(rawData) {
-
-  return {
-    categories: rawData.map((e) => (
-      {
-        ...e, id: e.name
-      }
-    ))
-  }
-
-}
 
 // This is to be able to access all parts of the state inside any reducer, and to not be constraint with names by combineReducers().
 export default function mainReducer(state = initial, action) {
@@ -63,30 +49,7 @@ export default function mainReducer(state = initial, action) {
 
 }
 
-function categoriesReducer(state = {}, action) {
-  switch (action.type) {
 
-    case GET_CATEGORIES :
-
-      const data = prepareCategoryDataForNormalizer(action.categories);
-
-      const category = new schema.Entity('categories');
-      const categoriesSchema = {categories: [category]};
-
-      const normalizedData = normalize(data, categoriesSchema);
-
-      return {
-        ...state,
-        categories: normalizedData.entities.categories,
-        categoriesIds: normalizedData.result.categories
-
-      };
-
-    default :
-      return state
-
-  }
-}
 
 
 function postsReducer(state = {}, action) {
