@@ -110,10 +110,8 @@ class PostList extends Component {
                        onClick={this.sortByVotes}
                      >
                        {header}
-                       <span
-                         className='glyphicon glyphicon-arrow-up'
-                       >
-                       </span>
+                       <span className='glyphicon glyphicon-arrow-up' style={{display:'inline'}}/>
+
                      </th>
                    );
                  if(header === 'Date') return (
@@ -123,10 +121,7 @@ class PostList extends Component {
                      onClick={this.sortByDate}
                    >
                      {header}
-                     <span
-                       className='glyphicon glyphicon-arrow-up'
-                     >
-                       </span>
+                     <span className='glyphicon glyphicon-arrow-up' style={{display:'inline'}}/>
                    </th>
                  );
                  return <th key={header}>{header}</th>
