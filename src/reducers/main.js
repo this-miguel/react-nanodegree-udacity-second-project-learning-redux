@@ -333,7 +333,7 @@ function postDeletedReducer(state, action) {
 function commentDeletedReducer(state, action) {
 
   const {status, comment} = action;
-  const {id: commentId} = comment;
+  const {id: commentId, parentId} = comment;
 
   if (status === statusOK) {
     return {
@@ -342,6 +342,12 @@ function commentDeletedReducer(state, action) {
         ...state.comments,
         [commentId]: {
           ...comment
+        }
+      },
+      posts: {
+        [parentId]: {
+          ...state.posts[parentId],
+          comments: state.posts[parentId].comments.filter((commentIdOld) => (commentIdOld !== commentId))
         }
       }
     }
